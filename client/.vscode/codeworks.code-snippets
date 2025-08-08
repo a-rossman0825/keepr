@@ -30,5 +30,19 @@
       "}"
     ],
     "scope": "javascript,typescript,javascriptreact,typescriptreact"
+  },
+  "TryException": {
+    "prefix": "trycatch:Exception",
+    "body": [
+      "try",
+      "{",
+      "  $0",
+      "}",
+      "catch (Exception exception)",
+      "{",
+      "  return BadRequest(exception.Message);",
+      "}"
+    ],
+    "scope": "javascript,typescript,javascriptreact,typescriptreact, csharp"
   }
 }

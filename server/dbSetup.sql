@@ -4,7 +4,21 @@ CREATE TABLE IF NOT EXISTS accounts(
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
   name VARCHAR(255) COMMENT 'User Name',
   email VARCHAR(255) UNIQUE COMMENT 'User Email',
-  picture VARCHAR(255) COMMENT 'User Picture'
+  picture VARCHAR(255) COMMENT 'User Picture',
+  cover_img VARCHAR(1000) COMMENT 'User Cover Image'
 ) default charset utf8mb4 COMMENT '';
 
+ALTER TABLE accounts
+ADD COLUMN cover_img VARCHAR(1000) DEFAULT 'https://images.unsplash.com/photo-1699462515761-90db271d77c8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGRlZmF1bHQlMjBjb3ZlciUyMGltZ3xlbnwwfDB8MHx8fDA%3D' COMMENT  'User Cover Image'
 
+CREATE TABLE keeps(
+  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  name VARCHAR(255) NOT NULL,
+  description VARCHAR(1000) NOT NULL,
+  img VARCHAR(1000) NOT NULL,
+  views INT UNSIGNED NOT NULL DEFAULT 0,
+  creator_id VARCHAR(255) NOT NULL,
+  FOREIGN KEY (creator_id) REFERENCES accounts (id) ON DELETE CASCADE
+);
