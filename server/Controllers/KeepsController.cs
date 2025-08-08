@@ -1,9 +1,8 @@
 
-
 namespace keepr.Controllers;
 
 [ApiController]
-[Route("api/keeps")]
+[Route("api/[controller]")]
 public class KeepsController : ControllerBase
 {
   private readonly KeepsService _keepsService;
@@ -43,7 +42,7 @@ public class KeepsController : ControllerBase
   }
 
   [HttpPost, Authorize]
-  public async Task<ActionResult<Keep>> Createkeep([FromBody] Keep keepData)
+  public async Task<ActionResult<Keep>> CreateKeep([FromBody] Keep keepData)
   {
     try
     {
