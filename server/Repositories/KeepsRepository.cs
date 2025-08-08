@@ -16,7 +16,7 @@ public class KeepsRepository : IRepository<Keep>
   {
     string sql = @"
     INSERT INTO
-      Keeps(
+      keeps(
         name,
         description,
         img,

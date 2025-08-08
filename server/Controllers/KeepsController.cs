@@ -1,9 +1,9 @@
-using System.Linq.Expressions;
+
 
 namespace keepr.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/keeps")]
 public class KeepsController : ControllerBase
 {
   private readonly KeepsService _keepsService;

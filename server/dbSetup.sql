@@ -22,3 +22,9 @@ CREATE TABLE keeps(
   creator_id VARCHAR(255) NOT NULL,
   FOREIGN KEY (creator_id) REFERENCES accounts (id) ON DELETE CASCADE
 );
+
+ALTER TABLE keeps
+ADD COLUMN kept INT NOT NULL DEFAULT 0;
+
+ALTER TABLE keeps
+DROP COLUMN kept;
