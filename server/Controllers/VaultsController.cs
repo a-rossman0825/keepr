@@ -16,11 +16,21 @@ public class VaultsController : ControllerBase
   }
 
   [HttpGet("{vaultId}")]
-  public ActionResult<List<Vault>> GetVaultById(int vaultId)
+  public async  Task<ActionResult<List<Vault>>> GetVaultById(int vaultId)
   {
     try
     {
       Vault vault = _vaultsService.GetById(vaultId);
+      if (vault == null)
+      {
+        return BadRequest("Vault Not Found.");
+      }
+      Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+
+      if (vault.IsPrivate == true && (userInfo == null || vault.CreatorId != userInfo.Id))
+      {
+        return BadRequest("No Vault With This Id");
+      }
       return Ok(vault);
     }
     catch (Exception exception)
