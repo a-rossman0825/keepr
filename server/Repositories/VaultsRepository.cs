@@ -88,6 +88,51 @@ public class VaultsRepository : IRepository<Vault>
     return foundVault;
   }
 
+  public List<Vault> GetVaultsByCreatorId(string profileId)
+  {
+    string sql = @"
+    SELECT
+      vaults.*,
+      accounts.id,
+      accounts.name,
+      accounts.picture,
+      accounts.cover_img AS coverImg
+    FROM vaults
+    JOIN accounts ON accounts.id = vaults.creator_id
+    WHERE vaults.creator_id = @profileId
+    ORDER BY vaults.id DESC
+    ;";
+
+    return _db.Query<Vault, Account, Vault>(sql, (vault, creator) =>
+    {
+      vault.Creator = creator;
+      return vault;
+    }, new { profileId }).ToList();
+  }
+
+  public List<Vault> GetVaultsByCreatorId(string profileId, bool isPrivate)
+  {
+    if (!isPrivate) return GetVaultsByCreatorId(profileId);
+
+    string sql = @"
+    SELECT
+      vaults.*,
+      accounts.id,
+      accounts.name,
+      accounts.picture,
+      accounts.cover_img AS coverImg
+    FROM vaults
+    JOIN accounts On accounts.id = vaults.creator_id
+    WHERE vaults.creator_id = @profileId
+    ORDER BY vaults.id DESC
+    ;";
+    return _db.Query<Vault, Account, Vault>(sql, (vault, creator) =>
+    {
+      vault.Creator = creator;
+      return vault;
+    }, new { profileId }).ToList();
+  }
+
   public void Update(Vault updateData)
   {
     string sql = @"

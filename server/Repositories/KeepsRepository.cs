@@ -102,6 +102,28 @@ public class KeepsRepository : IRepository<Keep>
     return foundKeep;
   }
 
+  public List<Keep> GetKeepsByCreatorId(string profileId)
+  {
+    string sql = @"
+    SELECT
+      keeps.*,
+      accounts.id,
+      accounts.name,
+      accounts.picture,
+      accounts.cover_img AS CoverImg
+    FROM keeps
+    JOIN accounts ON accounts.id = keeps.creator_id
+    WHERE keeps.creator_id = @profileId
+    ORDER BY keeps.id DESC
+    ;";
+
+    return _db.Query<Keep, Account, Keep>(sql, (keep, creator) =>
+    {
+      keep.Creator = creator;
+      return keep;
+    }, new { profileId }).ToList();
+  }
+
   public void Update(Keep updateData)
   {
     string sql = @"

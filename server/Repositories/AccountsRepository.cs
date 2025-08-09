@@ -38,11 +38,25 @@ public class AccountsRepository
             UPDATE accounts
             SET 
               name = @Name,
-              picture = @Picture
+              picture = @Picture,
               cover_img = @CoverImg
             WHERE id = @Id;";
     _db.Execute(sql, update);
     return update;
+  }
+
+  public Profile GetProfileById(string profileId)
+  {
+    string sql = @"
+    SELECT
+      accounts.id,
+      accounts.name,
+      accounts.picture,
+      accounts.cover_img AS CoverImg
+    FROM accounts
+    WHERE accounts.id = @profileId
+    ;";
+    return _db.Query<Profile>(sql, new { profileId }).SingleOrDefault();
   }
 }
 

@@ -3,10 +3,12 @@ namespace keepr.Services;
 public class AccountService
 {
   private readonly AccountsRepository _repo;
+  private readonly VaultsRepository _vaultsRepo;
 
-  public AccountService(AccountsRepository repo)
+  public AccountService(AccountsRepository repo, VaultsRepository vaultsRepo)
   {
     _repo = repo;
+    _vaultsRepo = vaultsRepo;
   }
 
   private Account GetAccount(string accountId)
@@ -36,5 +38,13 @@ public class AccountService
     original.Picture = editData.Picture ?? original.Picture;
     original.CoverImg = editData.CoverImg ?? original.CoverImg;
     return _repo.Edit(original);
+  }
+
+  public List<Vault> GetMyVaults(string userId)
+  {
+    return _vaultsRepo.GetVaultsByCreatorId(userId, true);
+    {
+
+    }
   }
 }
