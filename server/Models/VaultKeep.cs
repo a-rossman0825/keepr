@@ -7,6 +7,8 @@ public class VaultKeep : DbItem<int>
   public string CreatorId { get; set; }
 }
 
+
+// Creates a Keep with VaultKeepId on it
 public class SavedKeep : Keep
 {
   public int VaultKeepId { get; set; }
