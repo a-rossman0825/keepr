@@ -33,6 +33,15 @@ public class VaultKeepsService
     return vaultKeep;
   }
 
+  public List<SavedKeep> GetKeepsForVault(int vaultId)
+  {
+    Vault vault = _vaultsRepo.GetById(vaultId);
+    if (vault == null)
+    {
+      throw new Exception($"No Vault with id: {vaultId}");
+    }
+    return _vaultKeepsRepo.GetKeepsForVault(vaultId);
+  }
   public List<SavedKeep> GetKeepsForVault(int vaultId, string userId)
   {
     Vault vault = _vaultsRepo.GetById(vaultId);
@@ -42,7 +51,7 @@ public class VaultKeepsService
     }
     if (vault.IsPrivate == true && vault.CreatorId != userId)
     {
-      throw new Exception($"This vault is private.");
+      throw new Exception("This vault is private and does not belong to you!");
     }
     return _vaultKeepsRepo.GetKeepsForVault(vaultId);
   }
