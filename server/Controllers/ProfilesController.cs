@@ -34,13 +34,7 @@ public class ProfilesController : ControllerBase
     {
       Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
 
-      if (userInfo.Id != null)
-      {
-        List<Vault> creatorVaults = _profilesService.GetVaultsByProfileId(profileId, userInfo.Id);
-        return Ok(creatorVaults);
-      }
-
-      List<Vault> vaults = _profilesService.GetVaultsByProfileId(profileId, null);
+      List<Vault> vaults = _profilesService.GetVaultsByProfileId(profileId, userInfo?.Id);
       return Ok(vaults);
     }
     catch (Exception exception)

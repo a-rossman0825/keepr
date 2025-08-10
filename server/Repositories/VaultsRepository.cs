@@ -100,6 +100,7 @@ public class VaultsRepository : IRepository<Vault>
     FROM vaults
     JOIN accounts ON accounts.id = vaults.creator_id
     WHERE vaults.creator_id = @profileId
+    AND vaults.is_private = 0
     ORDER BY vaults.id DESC
     ;";
 
