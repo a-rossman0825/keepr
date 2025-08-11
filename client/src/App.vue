@@ -1,22 +1,35 @@
 <script setup>
 import Navbar from './components/Navbar.vue';
 import { RouterView } from 'vue-router';
+import NavbarMobile from './components/NavbarMobile.vue';
 
 </script>
 
 <template>
-  <header>
+  <header class="sticky-top bg-light mb-3">
     <Navbar />
   </header>
-  <main>
+  <main class="mb-5">
     <RouterView/>
   </main>
-  <footer class=" text-center">
-    Made with <i class="mdi mdi-heart text-pink"></i> by CodeWorks
+  <footer class="mt-5">
+    <NavbarMobile class="bg-light" />
   </footer>
 </template>
 
 <style lang="scss">
 
+
+@media (max-width: 769px){
+  header {
+    display: none;
+  }
+}
+
+@media (min-width: 769px){
+  footer {
+    display: none;
+  }
+}
 
 </style>
