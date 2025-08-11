@@ -39,8 +39,9 @@ import { Keep } from '@/models/Keep.js';
     inset: 0;
     background: linear-gradient(
       to bottom,
-      rgba(0,0,0,.15) 70%,
-      rgba(0,0,0,.85) 100%
+      rgba(0,0,0,.1) 70%,
+      rgba(0,0,0,.15) 75%,
+      rgba(0,0,0,.85) 100%,
     );
     z-index: 1;
     pointer-events: none;
