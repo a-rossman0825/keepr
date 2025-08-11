@@ -6,10 +6,10 @@ import NavbarMobile from './components/NavbarMobile.vue';
 </script>
 
 <template>
-  <header class="sticky-top bg-light mb-3">
+  <header class="sticky-top bg-light">
     <Navbar />
   </header>
-  <main class="mb-5">
+  <main class="mb-5 mt-3">
     <RouterView/>
   </main>
   <footer class="mt-5">
