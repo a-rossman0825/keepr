@@ -6,6 +6,15 @@ import { Keep } from "@/models/Keep.js";
 
 class KeepsService{
 
+
+  async deleteKeep(keepId) {
+    const res = await api.delete(`api/keeps/${keepId}`);
+    logger.log('Deleted keep', res.data);
+    const i = AppState.keeps.findIndex(keep => keep.id == keepId);
+    logger.log('got index of keep', i);
+    AppState.keeps.splice(i, 1);
+  }
+
   async createKeep(keepData) {
     logger.log('🖼️', keepData);
     const res = await api.post('api/keeps', keepData);

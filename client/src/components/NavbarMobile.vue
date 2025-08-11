@@ -26,15 +26,26 @@ function increaseImgI(){
           <img src="../assets/img/keepr_logo.png" alt="keeper logo" class="img-fluid w-100">
         </RouterLink>
       </div>
-      <div class="">
+      <div v-if="account">
         <button @click="increaseImgI()"
           role="button"
           data-bs-toggle="modal"
           data-bs-target="#createChoiceModal" 
-          class="create-btn bg-primary text-light btn fs-4 open-sans-font">Create</button>
+          class="create-btn bg-primary text-light btn fs-4 open-sans-font">
+          Create
+        </button>
+      </div>
+      <div v-else>
+        <button
+          @click="login()"
+          role="button"
+          class="create-btn bg-primary text-light btn fs-4 open-sans-font">Login to Create</button>
       </div>
       <div v-if="account">
-        <img  :src="account.picture" :alt="`${account.name}'s profile picture`" class="profile-picture">
+        <!-- TODO NO ROUTER LINK FOR ACCOUNT -->
+        <RouterLink :to="{name: 'Account'}">
+          <img  :src="account.picture" :alt="`${account.name}'s profile picture`" class="profile-picture">
+        </RouterLink>
       </div>
       <div v-else>
         <i @click="login()"

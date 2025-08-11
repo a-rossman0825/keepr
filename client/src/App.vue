@@ -5,6 +5,8 @@ import NavbarMobile from './components/NavbarMobile.vue';
 import CreateKeepModal from './components/CreateKeepModal.vue';
 import CreateModalWrapper from './components/CreateModalWrapper.vue';
 import CreateChoiceModal from './components/CreateChoiceModal.vue';
+import KeepDetailsModal from './components/KeepDetailsModal.vue';
+import DetailsModalWrapper from './components/DetailsModalWrapper.vue';
 
 </script>
 
@@ -28,6 +30,11 @@ import CreateChoiceModal from './components/CreateChoiceModal.vue';
   <CreateModalWrapper modalId="createChoiceModal" modalHeader="What would you like to create?">
     <CreateChoiceModal />
   </CreateModalWrapper>
+
+  <!-- NOTE KEEP DETAILS MODAL -->
+  <DetailsModalWrapper modalId="keepDetailsModal">
+    <KeepDetailsModal />
+  </DetailsModalWrapper>
 </template>
 
 <style lang="scss">

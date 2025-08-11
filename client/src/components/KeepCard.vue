@@ -1,11 +1,18 @@
 <script setup>
+import { AppState } from '@/AppState.js';
 import { Keep } from '@/models/Keep.js';
+import { Modal } from 'bootstrap';
 
 
 
-  defineProps({
+  const prop = defineProps({
     keep: { type: Keep, required: true },
   });
+
+  function openKeepModal() {
+    AppState.activeKeep = prop.keep;
+    Modal.getOrCreateInstance('#keepDetailsModal').show();
+  }
 
 </script>
 
@@ -13,13 +20,13 @@ import { Keep } from '@/models/Keep.js';
 <template>
   <!-- TODO NO DEAD URLS!!!! -->
   <div class="keep-card">
-    <img :src="keep.img" :alt="`${keep.creator.name}'s keep of ${keep.name}`" class="keep-img img-fluid"/>
+    <img @click="openKeepModal()" :src="keep.img" :alt="`${keep.creator.name}'s keep of ${keep.name}`" class="keep-img img-fluid"/>
     <div class="keep-content d-flex align-items-between">
       <h5 class="fraunces-font keep-title mb-0 text-truncate">{{ keep.name }}</h5>
       <img
-        :src="keep.creator?.picture"
-        :alt="keep.creator?.name"
-        :title="keep.creator?.name"
+        :src="prop.keep.creator?.picture"
+        :alt="prop.keep.creator?.name"
+        :title="prop.keep.creator?.name"
         class="creator-profile-img d-none d-lg-inline-block me-2" />
     </div>
   </div>
@@ -29,7 +36,6 @@ import { Keep } from '@/models/Keep.js';
 <style lang="scss" scoped>
 
 .keep-card {
-  position: relative;
   border-radius: 10px;
   overflow: hidden;
 
@@ -45,6 +51,7 @@ import { Keep } from '@/models/Keep.js';
     );
     z-index: 1;
     pointer-events: none;
+    border-radius: 10px;
   }
 }
 
@@ -54,6 +61,10 @@ import { Keep } from '@/models/Keep.js';
   height: auto;
   border-radius: 10px;
   z-index: 0;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .keep-content {
@@ -80,5 +91,7 @@ h5 {
   z-index: 2;
   text-shadow: 1px 1px 3px rgba(124, 121, 121, 0.67);
 }
+
+
 
 </style>

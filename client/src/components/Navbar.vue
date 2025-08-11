@@ -41,7 +41,7 @@ function login() {
       </div>
       <div>
         <RouterLink :to="{ name: 'Home' }" class="text-light">
-          <img class="keepr-logo" alt="logo" src="../assets/img/keepr_logo.png" height="45" />
+          <img class="keepr-logo" alt="logo" src="../assets/img/keepr_logo.png" height="45" :class="account ? '' : 'keepr-logo-LO'" />
         </RouterLink>
       </div>
       <div v-if="account?.picture">
@@ -79,6 +79,10 @@ a {
     padding-inline: 15.3px;
 
   }
+}
+
+.keepr-logo-LO {
+  margin-inline-start: 110px;
 }
 
 .dropdown-menu {

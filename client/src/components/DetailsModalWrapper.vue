@@ -1,13 +1,10 @@
 <script setup>
-import { AppState } from '@/AppState.js';
-import { computed} from 'vue';
 
   defineProps({
     modalId: { type: String, required: true, },
     modalHeader: { type: String, required: false, },
   });
 
-  const imgHasChanged = computed(() => AppState.imgHasChanged);
 
 </script>
 
@@ -15,7 +12,7 @@ import { computed} from 'vue';
 <template>
   <div class="modal fade mt-5" :id="modalId" tabindex="-1" :aria-labelledby="`${modalId}Label`"
     aria-hidden="true">
-    <div class="modal-dialog" :class="imgHasChanged ? 'modal-xl' : ''">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-3 open-sans-font mt-3 ms-3" :id="`${modalId}Label`">
