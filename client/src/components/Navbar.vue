@@ -1,17 +1,14 @@
 <script setup>
 import { AppState } from '@/AppState.js';
-import { Modal } from 'bootstrap';
+import { AuthService } from '@/services/AuthService.js';
 import { computed } from 'vue';
 
 
 const account = computed(()=> AppState.account);
 
-function openCreateKeepModal(){
-  Modal.getOrCreateInstance('#keeps-create-modal').show();
-}
 
-function openCreateVaultModal(){
-  Modal.getOrCreateInstance('#vault-create-modal').show();
+function login() {
+  AuthService.loginWithRedirect()
 }
 
 </script>
@@ -20,10 +17,12 @@ function openCreateVaultModal(){
   <nav class="navbar navbar-expand-md border-bottom sticky-top">
     <div class="container gap-2">
       <div class="d-flex align-items-center gap-2">
-        <button class="home-btn bg-success fs-5 open-sans-font">
-          Home
-        </button>
-        <div class="dropdown">
+        <RouterLink :to="{name: 'Home'}">
+          <button class="home-btn bg-success fs-5 open-sans-font">
+            Home
+          </button>
+        </RouterLink>
+        <div v-if="account" class="dropdown">
           <button
             class="dropdown-btn dropdown-toggle open-sans-font bg-light fs-5 px-3 py-1"
             type="button"
@@ -34,9 +33,9 @@ function openCreateVaultModal(){
           </button>
 
           <ul class="dropdown-menu shadow-sm" aria-labelledby="createMenu">
-            <li><a class="dropdown-item py-1 px-3 open-sans-font" role="button" @click="openCreateKeepModal()">new keep</a></li>
+            <li><a class="dropdown-item py-1 px-3 open-sans-font" role="button" data-bs-toggle="modal" data-bs-target="#createKeepModal">new keep</a></li>
             <li><hr class="dropdown-divider my-1"></li>
-            <li><a class="dropdown-item py-1 px-3 open-sans-font" role="button" @click="openCreateVaultModal()">new vault</a></li>
+            <li><a class="dropdown-item py-1 px-3 open-sans-font" role="button">new vault</a></li>
           </ul>
         </div>
       </div>
@@ -45,8 +44,13 @@ function openCreateVaultModal(){
           <img class="keepr-logo" alt="logo" src="../assets/img/keepr_logo.png" height="45" />
         </RouterLink>
       </div>
-      <div>
-        <img :src="account?.picture" :alt="`${account?.name}'s profile picture`" class="img-fluid profile-picture"/>
+      <div v-if="account?.picture">
+        <RouterLink :to="{ name: 'Account' }">
+          <img :src="account?.picture" :alt="`${account?.name}'s profile picture`" class="img-fluid profile-picture"/>
+        </RouterLink>
+      </div>
+      <div v-else>
+        <i role="button" @click="login()" class="mdi mdi-login fs-1 text-primary"></i>
       </div>
     </div>
   </nav>

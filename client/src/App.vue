@@ -2,6 +2,9 @@
 import Navbar from './components/Navbar.vue';
 import { RouterView } from 'vue-router';
 import NavbarMobile from './components/NavbarMobile.vue';
+import CreateKeepModal from './components/CreateKeepModal.vue';
+import CreateModalWrapper from './components/CreateModalWrapper.vue';
+import CreateChoiceModal from './components/CreateChoiceModal.vue';
 
 </script>
 
@@ -15,6 +18,16 @@ import NavbarMobile from './components/NavbarMobile.vue';
   <footer class="mt-5">
     <NavbarMobile class="bg-light" />
   </footer>
+
+  <!-- NOTE KEEP MODAL -->
+  <CreateModalWrapper modalId="createKeepModal" modalHeader="Add your keep">
+    <CreateKeepModal />
+  </CreateModalWrapper>
+
+  <!-- NOTE CHOICE MODAL -->
+  <CreateModalWrapper modalId="createChoiceModal" modalHeader="What would you like to create?">
+    <CreateChoiceModal />
+  </CreateModalWrapper>
 </template>
 
 <style lang="scss">

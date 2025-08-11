@@ -10,6 +10,11 @@ function login() {
   AuthService.loginWithRedirect()
 }
 
+function increaseImgI(){
+  AppState.choicePhotoIndex++;
+}
+
+
 </script>
 
 
@@ -22,7 +27,11 @@ function login() {
         </RouterLink>
       </div>
       <div class="">
-        <button class="create-btn bg-primary text-light btn fs-4 open-sans-font">Create</button>
+        <button @click="increaseImgI()"
+          role="button"
+          data-bs-toggle="modal"
+          data-bs-target="#createChoiceModal" 
+          class="create-btn bg-primary text-light btn fs-4 open-sans-font">Create</button>
       </div>
       <div v-if="account">
         <img  :src="account.picture" :alt="`${account.name}'s profile picture`" class="profile-picture">

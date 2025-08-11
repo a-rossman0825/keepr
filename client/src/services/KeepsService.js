@@ -5,6 +5,13 @@ import { Keep } from "@/models/Keep.js";
 
 
 class KeepsService{
+
+  async createKeep(keepData) {
+    logger.log('🖼️', keepData);
+    const res = await api.post('api/keeps', keepData);
+    const keep = new Keep(res.data);
+    AppState.keeps.push(keep);
+  }
   
   async getKeeps(){
     const res = await api.get('api/keeps');
