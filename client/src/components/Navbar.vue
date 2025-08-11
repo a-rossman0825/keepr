@@ -1,21 +1,31 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import { Modal } from 'bootstrap';
 import { computed } from 'vue';
 
 
 const account = computed(()=> AppState.account);
+
+function openCreateKeepModal(){
+  Modal.getOrCreateInstance('#keeps-create-modal').show();
+}
+
+function openCreateVaultModal(){
+  Modal.getOrCreateInstance('#vault-create-modal').show();
+}
+
 </script>
 
 <template>
   <nav class="navbar navbar-expand-md border-bottom sticky-top">
     <div class="container gap-2">
       <div class="d-flex align-items-center gap-2">
-        <button class="home-btn bg-success text-dark fs-5 open-sans-font">
+        <button class="home-btn bg-success fs-5 open-sans-font">
           Home
         </button>
         <div class="dropdown">
           <button
-            class="dropdown-btn dropdown-toggle open-sans-font bg-light fs-6 px-3 py-1"
+            class="dropdown-btn dropdown-toggle open-sans-font bg-light fs-5 px-3 py-1"
             type="button"
             id="createMenu"
             data-bs-toggle="dropdown"
@@ -24,9 +34,9 @@ const account = computed(()=> AppState.account);
           </button>
 
           <ul class="dropdown-menu shadow-sm" aria-labelledby="createMenu">
-            <li><a class="dropdown-item py-1 px-3" href="#">Action</a></li>
+            <li><a class="dropdown-item py-1 px-3 open-sans-font" role="button" @click="openCreateKeepModal()">new keep</a></li>
             <li><hr class="dropdown-divider my-1"></li>
-            <li><a class="dropdown-item py-1 px-3" href="#">Another action</a></li>
+            <li><a class="dropdown-item py-1 px-3 open-sans-font" role="button" @click="openCreateVaultModal()">new vault</a></li>
           </ul>
         </div>
       </div>
@@ -54,9 +64,17 @@ a {
 .home-btn {
   font-weight: 500;
   border: none;
-  border-radius: 10px;
+  border-radius: 15px;
   padding-inline: 15px;
-  padding-block: 5px;
+  padding-block: 3px;
+  transition: all .2s ease-in-out;
+
+  &:hover {
+    color: var(--bs-primary);
+    font-weight: 400;
+    padding-inline: 15.3px;
+
+  }
 }
 
 .dropdown-menu {
@@ -69,12 +87,16 @@ a {
 .dropdown-item {
   padding: .25rem .75rem;
   line-height: 1.25;
-  font-size: .95rem;
+  font-size: 1.2rem;
   text-align: start;
   border-radius: 10px;
+  font-weight: 600;
+  transition: all .2s ease-in-out;
 
   &:hover {
     background-color: var(--bs-secondary);
+    color: var(--bs-primary);
+    font-weight: 500;
   }
 }
 
@@ -87,7 +109,7 @@ a {
 
 .keepr-logo {
   height: 60px;
-  padding-right: 160px;
+  padding-right: 150px;
 }
 
 
@@ -95,6 +117,14 @@ a {
 .dropdown-btn {
   border: none;
   font-weight: 600;
+
+  transition: all .2s ease-in-out;
+
+  &:hover {
+    font-weight: 500;
+    opacity: 50%;
+    padding-right: 17px !important;
+  }
 }
 
 .profile-picture {
