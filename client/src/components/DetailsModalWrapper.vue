@@ -14,13 +14,7 @@
     aria-hidden="true">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-3 open-sans-font mt-3 ms-3" :id="`${modalId}Label`">
-            {{ modalHeader }}
-          </h1>
-          <button type="button" class="btn-close pt-0 mb-4" data-bs-dismiss="modal" aria-label="Close" title="close 'Create Keep' page"></button>
-        </div>
-        <div class="modal-body">
+        <div class="modal-body p-0 ms-2 position-relative">
           <slot></slot>
         </div>
       </div>

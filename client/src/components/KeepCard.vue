@@ -1,7 +1,11 @@
 <script setup>
 import { AppState } from '@/AppState.js';
 import { Keep } from '@/models/Keep.js';
+import { keepsService } from '@/services/KeepsService.js';
+import { logger } from '@/utils/Logger.js';
+import { Pop } from '@/utils/Pop.js';
 import { Modal } from 'bootstrap';
+import { computed } from 'vue';
 
 
 
@@ -9,9 +13,24 @@ import { Modal } from 'bootstrap';
     keep: { type: Keep, required: true },
   });
 
-  function openKeepModal() {
+  const account = computed(()=> AppState.account)
+
+  async function openKeepModal() {
     AppState.activeKeep = prop.keep;
-    Modal.getOrCreateInstance('#keepDetailsModal').show();
+
+    try {
+      if (prop.keep.creatorId != account.value?.id){
+      await keepsService.getKeepById(prop.keep.id);
+      Modal.getOrCreateInstance('#keepDetailsModal').show();
+      } else {
+        Modal.getOrCreateInstance('#keepDetailsModal').show();
+      }
+    }
+    catch (error){
+      Pop.error(error);
+      logger.log('Could not update keep view count', error);
+    }
+    
   }
 
 </script>

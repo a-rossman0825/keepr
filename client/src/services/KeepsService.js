@@ -3,29 +3,49 @@ import { api } from "./AxiosService.js";
 import { AppState } from "@/AppState.js";
 import { Keep } from "@/models/Keep.js";
 
+class KeepsService {
+  async updateKeep(keepId, updateData) {
+    const res = await api.put(`api/keeps/${keepId}`, updateData);
+    logger.log("updated Keep", res.data);
 
-class KeepsService{
+    AppState.activeKeep = new Keep(res.data);
+  }
 
+  async getKeepById(keepId) {
+    const res = await api.get(`api/keeps/${keepId}`);
+    const newKeep = new Keep(res.data);
+
+    AppState.activeKeep = newKeep;
+
+    const i = AppState.keeps.findIndex((keep) => keep.id == newKeep.id);
+    AppState.keeps.splice(i, 1, newKeep);
+
+    return newKeep;
+  }
 
   async deleteKeep(keepId) {
     const res = await api.delete(`api/keeps/${keepId}`);
-    logger.log('Deleted keep', res.data);
-    const i = AppState.keeps.findIndex(keep => keep.id == keepId);
-    logger.log('got index of keep', i);
+    logger.log("Deleted keep", res.data);
+
+    const i = AppState.keeps.findIndex((keep) => keep.id == keepId);
+    logger.log("got index of keep", i);
+
     AppState.keeps.splice(i, 1);
   }
 
   async createKeep(keepData) {
-    logger.log('🖼️', keepData);
-    const res = await api.post('api/keeps', keepData);
+    logger.log("🖼️", keepData);
+    const res = await api.post("api/keeps", keepData);
     const keep = new Keep(res.data);
+
     AppState.keeps.push(keep);
   }
-  
-  async getKeeps(){
-    const res = await api.get('api/keeps');
-    logger.log('Got Keeps!', res.data);
-    AppState.keeps = res.data.map(pojo => new Keep(pojo));
+
+  async getKeeps() {
+    const res = await api.get("api/keeps");
+    logger.log("Got Keeps!", res.data);
+
+    AppState.keeps = res.data.map((pojo) => new Keep(pojo));
   }
 }
 

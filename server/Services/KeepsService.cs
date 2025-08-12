@@ -63,4 +63,11 @@ public class KeepsService : IService<Keep>
     _keepsRepo.Update(originalKeep);
     return originalKeep;
   }
+
+  internal Keep GetByIdAndIncrement(int keepId)
+  {
+    Keep keep = _keepsRepo.getByIdAndIncrement(keepId);
+    if (keep == null) throw new Exception($"Invalid Id: {keepId}");
+    return keep;
+  }
 }

@@ -28,11 +28,11 @@ public class KeepsController : ControllerBase
   }
 
   [HttpGet("{keepId}")]
-  public ActionResult<Keep> getKeepbyId(int keepId)
+  public ActionResult<Keep> GetKeepbyId(int keepId)
   {
     try
     {
-      Keep keep = _keepsService.GetById(keepId);
+      Keep keep = _keepsService.GetByIdAndIncrement(keepId);
       return Ok(keep);
     }
     catch (Exception exception)

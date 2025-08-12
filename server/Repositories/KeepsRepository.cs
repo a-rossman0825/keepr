@@ -139,4 +139,24 @@ public class KeepsRepository : IRepository<Keep>
     int rowsAffected = _db.Execute(sql, updateData);
     if (rowsAffected != 1) throw new Exception(rowsAffected + " ROWS HABE BEEN UPDATED, CHECK YO CODE BRO!");
   }
+
+  internal Keep getByIdAndIncrement(int keepId)
+  {
+    string sql = @"
+    UPDATE keeps SET views = views + 1 WHERE id = @keepId LIMIT 1;
+
+    SELECT
+      keeps.*,
+      accounts.*
+    FROM keeps
+    JOIN accounts ON keeps.creator_id = accounts.id
+    WHERE keeps.id = @keepId
+    ; ";
+
+    return _db.Query<Keep, Account, Keep>(sql, (keep, account) =>
+    {
+      keep.Creator = account;
+      return keep;
+    }, new { keepId }).SingleOrDefault();
+  }
 }
