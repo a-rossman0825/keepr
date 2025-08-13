@@ -6,6 +6,16 @@ import { api } from './AxiosService.js'
 
 
 class AccountService {
+  async editProfile(editData) {
+    const res = await api.put(`account`, editData);
+    logger.log('Edited my Account', res.data);
+    const updatedAccount = new Account(res.data);
+    AppState.account = updatedAccount;
+    if (AppState.activeProfile?.id === updatedAccount.id) {
+      AppState.activeProfile = new Profile(res.data);
+    }
+    return updatedAccount;
+  }
 
 
 
