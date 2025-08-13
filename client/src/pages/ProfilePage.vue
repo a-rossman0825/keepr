@@ -131,9 +131,9 @@ function jumpLink(locationId) {
     <div class="row justify-content-start px-5">
       <div class="container">
         <div class="masonry-wrapper">
-          <div v-for="keep in keeps" :key="'profile-keeps-id-' + keep.id" class="keep-card position-relative">
+          <div v-for="keep in keeps" :key="'profile-keeps-id-' + keep.id" class="keep-card position-relative" :title="`${keep.name} by ${keep.creator.name}`">
             <KeepCard :keep />
-            <i v-if="keep.creatorId == account.id" @click="deleteKeep(keep?.id)" role="button" class="mdi mdi-close-circle" title="Delete This Keep"></i>
+            <i v-if="keep.creatorId == account?.id" @click="deleteKeep(keep?.id)" role="button" class="mdi mdi-close-circle" title="Delete This Keep"></i>
           </div>
         </div>
       </div>

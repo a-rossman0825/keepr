@@ -6,13 +6,15 @@ import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { Modal } from 'bootstrap';
 import { computed } from 'vue';
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRoute } from 'vue-router';
 
 
 
   const prop = defineProps({
     keep: { type: Keep, required: true },
   });
+
+  const route = useRoute();
 
   const account = computed(()=> AppState.account)
 
@@ -43,7 +45,7 @@ import { RouterLink } from 'vue-router';
     <img @click="openKeepModal()" :src="keep.img" :alt="`${keep.creator.name}'s keep of ${keep.name}`" class="keep-img img-fluid"/>
     <div class="keep-content d-flex justify-content-between">
       <h5 class="fraunces-font keep-title mb-0 text-truncate">{{ keep.name }}</h5>
-      <RouterLink :to="{ name: 'Profile',  params: {profileId: `${prop.keep.creatorId}` } }">
+      <RouterLink v-if="!route.params.profileId" :to="{ name: 'Profile',  params: {profileId: `${prop.keep.creatorId}` } }">
         <img
         :src="prop.keep.creator?.picture"
         :alt="prop.keep.creator?.name"

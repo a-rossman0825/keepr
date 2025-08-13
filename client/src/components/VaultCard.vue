@@ -1,31 +1,47 @@
 <script setup>
 import { AppState } from '@/AppState.js';
 import { Vault } from '@/models/Vault.js';
-import { computed } from 'vue';
+import { vaultsService } from '@/services/VaultsService.js';
+import { logger } from '@/utils/Logger.js';
+import { Pop } from '@/utils/Pop.js';
+import { computed, ref } from 'vue';
 
 
-const prop = defineProps({
+const props = defineProps({
   vault: { type: Vault, required: true },
 });
 
 const account = computed(()=> AppState.account);
 
-async function toggleIsPrivate(){
-  const vaultId = prop.vault.id;
+const isPrivateUpdating = ref(false);
 
+async function toggleIsPrivate(){
+  if (isPrivateUpdating.value) return;
+  isPrivateUpdating.value = true;
+
+  try {
+    await vaultsService.updateVault(props.vault.id, { isPrivate: !props.vault.isPrivate });
+    isPrivateUpdating.value = false;
+  }
+  catch (error){
+    Pop.error(error);
+    logger.error('Could not toggle isPrivate on vault!', error);
+    isPrivateUpdating.value = false;
+  }
 }
 
 </script>
 
 
 <template>
-    <div class="vault-card-wrapper position-relative" :title="`${prop.vault.name} by ${prop.vault.creator.name}`">
-      <img :src="prop.vault.img" :alt="`${prop.vault.creator.name}'s vault cover image`" class="img-fluid vault-img">
+    <div class="vault-card-wrapper position-relative" :title="`${props.vault.name} by ${props.vault.creator.name}`">
+      <img :src="props.vault.img" :alt="`${props.vault.creator.name}'s vault cover image`" class="img-fluid vault-img">
       <div class="vault-content d-flex align-items-end justify-content-between py-3 position-absolute cursor-pointer">
-        <h5 class="open-sans-font vault-title mb-0 text-truncate fs-4 text-uppercase">{{ prop.vault.name }}</h5>
-        <div v-if="prop.vault.creatorId == account?.id">
-          <i v-if="prop.vault.isPrivate" class="mdi mdi-shield-lock text-light fs-1" title="unlock vault"></i>
-          <i v-else class="mdi mdi-shield-lock-open text-light fs-1" title="lock vault"></i>
+        <h5 class="open-sans-font vault-title mb-0 text-truncate fs-4 text-uppercase">{{ props.vault.name }}</h5>
+        <div v-if="props.vault.creatorId == account?.id">
+          <button class="btn">
+            <i @click="toggleIsPrivate()" class="mdi text-light fs-1" :class="[vault.isPrivate ? 'mdi-lock' : 'mdi-lock-open', { 'opacity-50 pointer-events-none': isPrivateUpdating }]" title="unlock vault"></i>
+          </button>
         </div>
       </div>
     </div>

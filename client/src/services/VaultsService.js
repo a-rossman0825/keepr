@@ -5,6 +5,22 @@ import { Vault } from "@/models/Vault.js";
 
 
 class VaultsService {
+
+
+  async updateVault(vaultId, editData) {
+    const res = await api.put(`api/vaults/${vaultId}`, editData);
+    logger.log('Edited vault!', res.data);
+    const updatedVault = new Vault(res.data);
+    
+    const i = AppState.vaults.findIndex((vault) => vault.id == vaultId);
+    if (i !== -1) AppState.vaults.splice(i, 1, updatedVault);
+    else AppState.vaults.unshift(updatedVault);
+    
+    if (AppState.activeVault?.id == vaultId) {
+      AppState.activeVault = updatedVault;
+    }
+    return updatedVault;
+  }
   
   
   async getVaultsByProfileId(profileId) {

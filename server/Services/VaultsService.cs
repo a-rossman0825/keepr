@@ -53,7 +53,7 @@ public class VaultsService : IService<Vault>
     Vault originalVault = GetById(vaultId);
     if (originalVault.CreatorId != userInfo.Id)
     {
-      throw new Exception($"You can not update someone else's keep, {userInfo.Name}!");
+      throw new Exception($"You can not update someone else's vault, {userInfo.Name}!");
     }
 
     originalVault.Name = updateData.Name ?? originalVault.Name;
