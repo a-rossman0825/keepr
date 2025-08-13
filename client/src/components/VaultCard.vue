@@ -34,17 +34,21 @@ async function toggleIsPrivate(){
 
 
 <template>
-    <div class="vault-card-wrapper position-relative" :title="`${props.vault.name} by ${props.vault.creator.name}`">
-      <img :src="props.vault.img" :alt="`${props.vault.creator.name}'s vault cover image`" class="img-fluid vault-img">
-      <div class="vault-content d-flex align-items-end justify-content-between py-3 position-absolute cursor-pointer">
-        <h5 class="open-sans-font vault-title mb-0 text-truncate fs-4 text-uppercase">{{ props.vault.name }}</h5>
-        <div v-if="props.vault.creatorId == account?.id">
-          <button class="btn">
-            <i @click="toggleIsPrivate()" class="mdi text-light fs-1" :class="[vault.isPrivate ? 'mdi-lock' : 'mdi-lock-open', { 'opacity-50 pointer-events-none': isPrivateUpdating }]" title="unlock vault"></i>
-          </button>
+  
+  <div class="vault-card-wrapper position-relative" :title="`${props.vault.name} by ${props.vault.creator.name}`">
+      <RouterLink :to="{ name: 'Vault Details Page', params: { vaultId: `${props.vault.id}` } }">
+        <img :src="props.vault.img" :alt="`${props.vault.creator.name}'s vault cover image`" class="img-fluid vault-img">
+        <div class="vault-content d-flex align-items-end justify-content-between py-3 position-absolute cursor-pointer">
+          <h4 class="open-sans-font vault-title mb-0 text-truncate fs-4 text-uppercase">{{ props.vault.name }}</h4>
+          <div v-if="props.vault.creatorId == account?.id">
+            <button class="btn">
+              <i @click.stop.prevent="toggleIsPrivate()" class="mdi text-light fs-1 z-3" :class="[vault.isPrivate ? 'mdi-lock' : 'mdi-lock-open', { 'opacity-50 pointer-events-none': isPrivateUpdating }]" :title="vault.isPrivate ? 'Unlock Vault' : 'Lock Vault'"></i>
+            </button>
+          </div>
         </div>
-      </div>
+      </RouterLink>
     </div>
+  
 </template>
 
 
@@ -106,7 +110,7 @@ async function toggleIsPrivate(){
     align-items: center;
   }
 
-  h5 {
+  h4 {
     margin-inline-start: 10px;
     font-weight: 400 !important;
     letter-spacing: .4ch;

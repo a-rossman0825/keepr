@@ -41,10 +41,10 @@ import { RouterLink, useRoute } from 'vue-router';
 
 <template>
   <!-- TODO NO DEAD URLS!!!! -->
-  <div v-if="keep" class="keep-card-wrapper">
+  <div v-if="prop.keep" class="keep-card-wrapper">
     <img @click="openKeepModal()" :src="keep.img" :alt="`${keep.creator.name}'s keep of ${keep.name}`" class="keep-img img-fluid"/>
     <div class="keep-content d-flex justify-content-between">
-      <h5 class="fraunces-font keep-title mb-0 text-truncate">{{ keep.name }}</h5>
+      <h1 class="fraunces-font keep-title mb-0 text-truncate">{{ keep.name }}</h1>
       <RouterLink v-if="!route.params.profileId" :to="{ name: 'Profile',  params: {profileId: `${prop.keep.creatorId}` } }">
         <img
         :src="prop.keep.creator?.picture"
@@ -118,7 +118,7 @@ import { RouterLink, useRoute } from 'vue-router';
   }
 }
 
-h5 {
+h1 {
   margin-inline-start: 10px;
   font-size: 150%;
   font-weight: 100 !important;

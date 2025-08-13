@@ -31,7 +31,7 @@ const routes = [
   {
     path: '/vault/:vaultId',
     name: 'Vault Details Page',
-    component: loadPage('VaultPage')
+    component: loadPage('VaultDetails')
   }
 ]
 

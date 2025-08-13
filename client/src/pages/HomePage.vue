@@ -43,7 +43,7 @@ async function deleteKeep(keepId){
 <template>
   <div class="container">
     <div class="masonry-wrapper">
-      <div v-for="keep in keeps" :key="'keeps-feed-id-' + keep.id" class="keep-card position-relative">
+      <div v-for="keep in keeps" :key="'keeps-feed-id-' + keep.id" class="keep-card position-relative" :title="`${keep.name} by: ${keep.creator?.name}`">
         <KeepCard :keep/>
         <i v-if="keep?.creatorId == account?.id" @click="deleteKeep(keep?.id)" role="button" class="mdi mdi-close-circle" title="Delete This Keep"></i>
       </div>
@@ -64,6 +64,10 @@ async function deleteKeep(keepId){
   top: -10px;
   right: -7px;
   z-index: 10;
+  transition: all .3s ease-in-out;
+  &:hover {
+    color: rgb(250, 0, 0);
+  }
 }
 
 @media (min-width: 992px){
@@ -113,6 +117,14 @@ async function deleteKeep(keepId){
     box-shadow: 5px 5px 9px rgba(46, 45, 45, 0.537);
     transform: translateY(-3px);
     filter: contrast(130%);
+
+    .mdi-close-circle{
+      opacity: .6;
+    }
+  }
+
+  .mdi-close-circle {
+    opacity: 0;
   }
 }
 </style>

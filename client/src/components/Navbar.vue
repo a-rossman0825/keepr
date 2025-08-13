@@ -46,7 +46,7 @@ function login() {
       </div>
       <div v-if="account?.picture">
         <RouterLink :to="{ name: 'Profile', params: {profileId: `${account.id}`} }">
-          <img :src="account?.picture" :alt="`${account?.name}'s profile picture`" class="img-fluid profile-picture"/>
+          <img :src="account?.picture" :alt="`${account?.name}'s profile picture`" class="img-fluid profile-picture" title="Go to Your Profile Page"/>
         </RouterLink>
       </div>
       <div v-else>
@@ -72,12 +72,18 @@ a {
   padding-inline: 15px;
   padding-block: 3px;
   transition: all .2s ease-in-out;
+  box-shadow: 0px 2px 3px var(--bs-primary);
 
   &:hover {
     color: var(--bs-primary);
-    font-weight: 400;
-    padding-inline: 15.3px;
 
+    box-shadow: 2px 4px 7px var(--bs-primary);
+  }
+
+  &:active {
+    color: rgba(233, 216, 214, 1);
+    background-color: rgb(62, 61, 61) !important;
+    box-shadow: 1px 1px 3px black;
   }
 }
 
@@ -104,7 +110,6 @@ a {
   &:hover {
     background-color: var(--bs-secondary);
     color: var(--bs-primary);
-    font-weight: 500;
   }
 }
 
@@ -129,9 +134,7 @@ a {
   transition: all .2s ease-in-out;
 
   &:hover {
-    font-weight: 500;
     opacity: 50%;
-    padding-right: 17px !important;
   }
 }
 

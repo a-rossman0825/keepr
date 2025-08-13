@@ -190,6 +190,7 @@ function jumpLink(locationId) {
 
   &:hover {
     opacity: 1;
+    cursor: pointer;
   }
 }
 
