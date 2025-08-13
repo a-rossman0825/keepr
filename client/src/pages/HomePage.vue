@@ -105,8 +105,14 @@ async function deleteKeep(keepId){
 .keep-card {
   break-inside: avoid;
   border-radius: 10px;
-  box-shadow: 1px 2px 4px rgba(156, 156, 156, 0.537);
+  box-shadow: 4px 4px 7px rgba(115, 115, 115, 0.537);
+
+  transition: all .3s ease-in-out;
+
+  &:hover {
+    box-shadow: 5px 5px 9px rgba(46, 45, 45, 0.537);
+    transform: translateY(-3px);
+    filter: contrast(130%);
+  }
 }
-
-
 </style>

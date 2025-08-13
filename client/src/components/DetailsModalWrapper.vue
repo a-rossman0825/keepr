@@ -10,11 +10,11 @@
 
 
 <template>
-  <div class="modal fade mt-5" :id="modalId" tabindex="-1" :aria-labelledby="`${modalId}Label`"
+  <div class="modal fade pt-5" :id="modalId" tabindex="-1" :aria-labelledby="`${modalId}Label`"
     aria-hidden="true">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
-        <div class="modal-body p-0 ms-2 position-relative">
+        <div class="modal-body p-0 position-relative">
           <slot></slot>
         </div>
       </div>

@@ -47,6 +47,13 @@ class KeepsService {
 
     AppState.keeps = res.data.map((pojo) => new Keep(pojo));
   }
+
+    async getKeepsByProfileId(profileId) {
+      const res = await api.get(`api/profiles/${profileId}/keeps`);
+      logger.log('Got Users Keeps', res.data);
+      AppState.keeps = res.data.map((pojo) => new Keep(pojo));
+  
+    }
 }
 
 export const keepsService = new KeepsService();

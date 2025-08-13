@@ -11,6 +11,7 @@ const keepData = ref({
   name: '',
   img: '',
   description: '',
+  views: 1
 })
 
 async function createKeep(){
@@ -39,6 +40,7 @@ function clearForm(){
     name: '',
     img: '',
     description: '',
+    views: 1
   }
 }
 

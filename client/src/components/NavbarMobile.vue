@@ -43,7 +43,7 @@ function increaseImgI(){
       </div>
       <div v-if="account">
         <!-- TODO NO ROUTER LINK FOR ACCOUNT -->
-        <RouterLink :to="{name: 'Account'}">
+        <RouterLink :to="{name: 'Profile', params: { profileId: `${account.id}`}}">
           <img  :src="account.picture" :alt="`${account.name}'s profile picture`" class="profile-picture">
         </RouterLink>
       </div>

@@ -13,7 +13,7 @@ import { computed} from 'vue';
 
 
 <template>
-  <div class="modal fade mt-5" :id="modalId" tabindex="-1" :aria-labelledby="`${modalId}Label`"
+  <div class="modal fade pt-5" :id="modalId" tabindex="-1" :aria-labelledby="`${modalId}Label`"
     aria-hidden="true">
     <div class="modal-dialog" :class="imgHasChanged ? 'modal-xl' : ''">
       <div class="modal-content">

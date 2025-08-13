@@ -45,7 +45,7 @@ function login() {
         </RouterLink>
       </div>
       <div v-if="account?.picture">
-        <RouterLink :to="{ name: 'Account' }">
+        <RouterLink :to="{ name: 'Profile', params: {profileId: `${account.id}`} }">
           <img :src="account?.picture" :alt="`${account?.name}'s profile picture`" class="img-fluid profile-picture"/>
         </RouterLink>
       </div>

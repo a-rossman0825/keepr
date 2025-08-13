@@ -50,6 +50,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Marko+One&display=swap');
 
 
 
@@ -142,6 +143,15 @@
   animation: blink-toasty .2s ease forwards;
 }
 
+.modal {
+  background-color: rgba(163, 193, 205, 0.65) !important;
+  transition: all .2s ease-in-out;
+}
+
+.modal-content {
+  box-shadow: 0px 5px 20px black;
+}
+
 #pop-toast-container {
   position: fixed;
   top: 0;
@@ -206,7 +216,7 @@ form:invalid button[type="submit"] {
 }
 
 .open-sans-font {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Oxygen", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
@@ -214,8 +224,9 @@ form:invalid button[type="submit"] {
 }
 
 .fraunces-font {
-  font-family: "Oxygen", sans-serif;
+  font-family: "Marko One", serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
 }
+

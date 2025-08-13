@@ -6,6 +6,7 @@ import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { Modal } from 'bootstrap';
 import { computed } from 'vue';
+import { RouterLink } from 'vue-router';
 
 
 
@@ -38,15 +39,17 @@ import { computed } from 'vue';
 
 <template>
   <!-- TODO NO DEAD URLS!!!! -->
-  <div class="keep-card">
+  <div v-if="keep" class="keep-card-wrapper">
     <img @click="openKeepModal()" :src="keep.img" :alt="`${keep.creator.name}'s keep of ${keep.name}`" class="keep-img img-fluid"/>
-    <div class="keep-content d-flex align-items-between">
+    <div class="keep-content d-flex justify-content-between">
       <h5 class="fraunces-font keep-title mb-0 text-truncate">{{ keep.name }}</h5>
-      <img
+      <RouterLink :to="{ name: 'Profile',  params: {profileId: `${prop.keep.creatorId}` } }">
+        <img
         :src="prop.keep.creator?.picture"
         :alt="prop.keep.creator?.name"
         :title="prop.keep.creator?.name"
         class="creator-profile-img d-none d-lg-inline-block me-2" />
+      </RouterLink>
     </div>
   </div>
 </template>
@@ -54,7 +57,7 @@ import { computed } from 'vue';
 
 <style lang="scss" scoped>
 
-.keep-card {
+.keep-card-wrapper {
   border-radius: 10px;
   overflow: hidden;
 
@@ -64,20 +67,20 @@ import { computed } from 'vue';
     inset: 0;
     background: linear-gradient(
       to bottom,
-      rgba(0,0,0,.1) 70%,
-      rgba(0,0,0,.15) 75%,
-      rgba(0,0,0,.85) 100%,
+      rgba(0,0,0,0.03) 45%,
+      rgba(0,0,0,.2) 65%,
+      rgba(0,0,0,.5) 100%,
     );
     z-index: 1;
     pointer-events: none;
     border-radius: 10px;
+
   }
 }
 
 .keep-img {
   display: block;
   width: 100%;
-  height: auto;
   border-radius: 10px;
   z-index: 0;
 
@@ -102,10 +105,22 @@ import { computed } from 'vue';
   border-radius: 50%;
   object-fit: cover;
   box-shadow: 0 1px 2px rgba(0,0,0,.35);
+  transition: 
+  box-shadow .4s ease-in-out,
+  width .2s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    width: 41px;
+    box-shadow: 0px 0px 20px whitesmoke;
+  }
 }
 
 h5 {
-  font-size: 2.5ch;
+  margin-inline-start: 10px;
+  font-size: 150%;
+  font-weight: 100 !important;
+  letter-spacing: .1ch;
   color: var(--bs-light);
   z-index: 2;
   text-shadow: 1px 1px 3px rgba(124, 121, 121, 0.67);
