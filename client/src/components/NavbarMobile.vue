@@ -75,6 +75,7 @@ box-shadow: 0 4px 2px rgba(174, 173, 173, 0.45);
   width: 70px;
   aspect-ratio: 1/1;
   border-radius: 50%;
+  object-fit: cover;
   box-shadow: 0 4px 2px rgba(174, 173, 173, 0.45);
 }
 

@@ -89,6 +89,7 @@ function clearForm(){
         <div class="d-block-flex text-end pb-0">
           <small>Private Vaults can only be seen by you</small>
           <div class="form-check justify-content-end d-flex pb-0">
+            <!-- FIXME you need v-model -->
             <input class="form-check-input pb-0" type="checkbox" value="true" id="isPrivate">
             <label class="form-check-label ms-2 pb-0" for="isPrivate">
               Make Vault Private?

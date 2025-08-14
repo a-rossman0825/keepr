@@ -11,6 +11,7 @@ class VaultsService {
     const res = await api.post("api/vaults", vaultData);
     const vault = new Vault(res.data);
     if (route == vault.creatorId)
+      // FIXME unshift
     AppState.vaults.push(vault);
   }
 

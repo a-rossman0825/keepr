@@ -44,9 +44,9 @@ function login() {
           <img class="keepr-logo" alt="logo" src="../assets/img/keepr_logo.png" height="45" :class="account ? '' : 'keepr-logo-LO'" />
         </RouterLink>
       </div>
-      <div v-if="account?.picture">
+      <div v-if="account">
         <RouterLink :to="{ name: 'Profile', params: {profileId: `${account.id}`} }">
-          <img :src="account?.picture" :alt="`${account?.name}'s profile picture`" class="img-fluid profile-picture" title="Go to Your Profile Page"/>
+          <img :src="account.picture" :alt="`${account?.name}'s profile picture`" class="img-fluid profile-picture" title="Go to Your Profile Page"/>
         </RouterLink>
       </div>
       <div v-else>

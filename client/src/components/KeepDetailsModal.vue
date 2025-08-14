@@ -79,6 +79,7 @@ async function createVaultKeep(){
                     <option disabled hidden selected value="">Your Vaults</option>
                     <option v-for="vault in userVaults" :key="`create-vaultKeep-id-${vault.id}`" class="dropdown-item" :value="vault.id">{{ vault.name }}</option>
                   </select>
+                  <!-- FIXME re-work v-if for vault page -->
                   <button type="submit" v-if="!isVaultPage && account" class="ms-3 ms-xl-4 save-btn mt-1 open-sans-font">save</button>
                 </form>
               </div>

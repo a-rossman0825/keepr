@@ -79,10 +79,10 @@ async function toggleIsPrivate(){
 <template>
   <div v-if="vault" class="container-fluid">
     <div class="d-flex justify-content-center">  
-      <div class="row text-center justify-content-center mt-3 w-50">
+      <div class="row text-center justify-content-center mt-3 ">
         <div class="align-items-center d-flex text-center justify-content-center bg-cover" :style="`background-image: url('${ vault.img }')`">
           <div class="row text-light hero-text fraunces-font">
-            <h1>{{ vault.name.toUpperCase() }}</h1>
+            <h1 class="">{{ vault.name.toUpperCase() }}</h1>
             <h2>by {{ vault.creator.name.toLowerCase() }}</h2>
           </div>
         </div>
@@ -96,7 +96,7 @@ async function toggleIsPrivate(){
         </div>
         <div class="d-flex justify-content-center mt-3">
           <h3 class="fs-5 bg-secondary py-2 px-2 keeps-count">{{ keeps.length }} Keep{{ keeps.length == 1 ? '' : 's' }}</h3>
-          <div>
+          <div v-if="vault.creatorId == account.id">
             <i @click="toggleIsPrivate()" class="mdi locked-btn fs-4 ms-1" :class="vault.isPrivate ? 'mdi-lock' : 'mdi-lock-open-outline'"></i>
           </div>
         </div>
@@ -139,6 +139,7 @@ async function toggleIsPrivate(){
 .hero-text {
   text-shadow: 4px 6px 5px black;
   letter-spacing: .4rem;
+  width:260px;
 }
 
 .keeps-count {
