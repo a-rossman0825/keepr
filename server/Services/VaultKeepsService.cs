@@ -53,7 +53,8 @@ public class VaultKeepsService
     {
       throw new Exception("This vault is private and does not belong to you!");
     }
-    return _vaultKeepsRepo.GetKeepsForVault(vaultId);
+    List<SavedKeep> keeps = _vaultKeepsRepo.GetKeepsForVault(vaultId);
+    return keeps;
   }
 
   public string Delete(int vaultKeepId, string userId)

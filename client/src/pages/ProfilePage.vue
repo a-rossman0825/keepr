@@ -170,7 +170,6 @@ function toggleCIEdit(){
           <h1 class="dropdown-btn mdi mdi-dots-horizontal fs-2 me-3 mt-0" title="Edit Profile"
           data-bs-toggle="dropdown"
           aria-expanded="false"></h1>
-          
           <div class="dropdown-menu border-black">
             <li @click="toggleEdit(true)" class="dropdown-item border-bottom border-black">edit profile</li>
             <li @click="logout()" class="dropdown-item">logout</li>

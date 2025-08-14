@@ -16,7 +16,7 @@ public class VaultsController : ControllerBase
   }
 
   [HttpGet("{vaultId}")]
-  public async  Task<ActionResult<List<Vault>>> GetVaultById(int vaultId)
+  public async  Task<ActionResult<Vault>> GetVaultById(int vaultId)
   {
     try
     {

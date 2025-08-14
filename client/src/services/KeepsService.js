@@ -4,6 +4,18 @@ import { AppState } from "@/AppState.js";
 import { Keep } from "@/models/Keep.js";
 
 class KeepsService {
+  
+  
+  
+  async deleteVaultKeep(vaultKeepId) {
+    const res = await api.delete(`api/vaultkeeps/${vaultKeepId}`);
+    logger.log('Deleted VaultKeep', res.data);
+    AppState.activeKeep = null;
+    const i = AppState.keeps.findIndex((keep)=> keep.vaultKeepId == vaultKeepId);
+    AppState.keeps.splice(i, 1);
+  }
+
+
   async updateKeep(keepId, updateData) {
     const res = await api.put(`api/keeps/${keepId}`, updateData);
     logger.log("updated Keep", res.data);

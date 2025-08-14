@@ -1,14 +1,35 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import { keepsService } from '@/services/KeepsService.js';
+import { logger } from '@/utils/Logger.js';
+import { Pop } from '@/utils/Pop.js';
 import { Modal } from 'bootstrap';
 import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 
 
 const activeKeep = computed(()=> AppState.activeKeep);
 const creator = computed(() => AppState.activeKeep.creator);
+const route = useRoute();
+const activeVault = computed(()=> AppState.activeVault);
+const isVaultPage = computed(()=> route.name == 'Vault Details Page');
+const account = computed(()=> AppState.account);
 
 function closeModal(){
   Modal.getOrCreateInstance("#keepDetailsModal").hide();
+}
+
+async function deleteVaultKeep(){
+  const confirmed = await Pop.confirm('Delete this keep from your vault?')
+  if (!confirmed) return;
+  try {
+    await keepsService.deleteVaultKeep(activeKeep.value.vaultKeepId);
+    closeModal();
+  }
+  catch (error){
+    Pop.error(error);
+    logger.log('Could not delete vaultkeep', error);
+  }
 }
 
 </script>
@@ -27,12 +48,12 @@ function closeModal(){
             <i class="ms-4 me-2 fraunces-font keep-count-icon">k</i><span>{{ activeKeep.kept }}</span>
           </div>
           <div>
-            <h1 class="text-center mb-3 fraunces-font fw-bold px-4">{{ activeKeep.name }}</h1>
+            <h1 class="text-center mb-3 fraunces-font fw-bold px-4 text-black">{{ activeKeep.name }}</h1>
             <p class="px-5 mb-0 pb-0 keep-desc">{{ activeKeep.description }}</p>
           </div>
-          <div class="d-inline-flex align-items-center justify-content-between mb-3 mt-5 mt-lg-0">
+          <div class="d-inline-flex align-items-center justify-content-between mb-2 mt-5 mt-lg-0">
             <div class="d-flex ms-3 ms-xl-5">
-              <div class="dropdown open d-flex">
+              <div v-if="activeVault?.creatorId != account?.id || !isVaultPage" class="dropdown open d-flex">
                 <button
                   class=" btn dropdown-toggle open-sans-font fw-bold"
                   type="button"
@@ -50,12 +71,15 @@ function closeModal(){
                   </button>
                 </div>
               </div>
-              <button class="ms-3 ms-xl-4 save-btn mt-1 open-sans-font">save</button>
+              <div v-else class="">
+                <h2 @click="deleteVaultKeep()" class="fs-5 remove-btn mb-0"><i class="mdi mdi-cancel"> </i> Remove</h2>
+              </div>
+              <button v-if="!isVaultPage" class="ms-3 ms-xl-4 save-btn mt-1 open-sans-font">save</button>
             </div>
             <RouterLink @click="closeModal()" :to="{ name: 'Profile', params: { profileId: `${activeKeep.creatorId}`} }">
               <div class="d-inline-flex align-items-center me-4">
                 <img :src="creator?.picture" :alt="`${creator?.name}'s profile picture`" class="img-fluid profile-picture"/>
-                <h5 class="mt-2 ms-2 fraunces-font profile-name">{{ creator?.name }}</h5>
+                <h3 class="mt-2 ms-2 open-sans-font fs-5 profile-name">{{ creator?.name }}</h3>
               </div>
             </RouterLink>
           </div>
@@ -77,10 +101,6 @@ a {
     width: 600px;
     max-height: 80dvh;
     object-fit: cover;
-  }
-
-  .keep-desc {
-    text-indent: 2ch;
   }
 
   @media (max-width: 991px){
@@ -108,7 +128,7 @@ a {
     width: 40px;
     aspect-ratio: 1/1;
     border-radius: 50%;
-    box-shadow: 0px 3px 3px rgba(112, 109, 109, 0.7);
+    box-shadow: 0px 5px 3px rgba(112, 109, 109, 0.7);
   }
 
   .profile-name {
@@ -124,6 +144,19 @@ a {
     padding-inline: 12px;
     box-shadow: 0px 4px 4px var(--bs-secondary);
     font-weight: 500;
+  }
+
+  .remove-btn {
+    letter-spacing: .05ch;
+    border-bottom: 1px solid rgba(185, 178, 178, 0.987);
+    padding-right: 12px;
+    color: rgba(185, 178, 178, 0.987);
+    transition: all .2s ease-in-out;
+
+    &:hover {
+      color: black;
+      cursor: pointer;
+    }
   }
 
   .keep-count-icon {

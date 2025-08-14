@@ -11,5 +11,6 @@ export class Keep extends DbItem {
     this.creatorId = data.creatorId;
     this.creator = new Profile(data.creator)
     this.kept = data.kept;
+    this.vaultKeepId = data.vaultKeepId;
   }
 }

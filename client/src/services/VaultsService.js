@@ -2,9 +2,36 @@ import { logger } from "@/utils/Logger.js";
 import { api } from "./AxiosService.js";
 import { AppState } from "@/AppState.js";
 import { Vault } from "@/models/Vault.js";
+import { Keep } from "@/models/Keep.js";
 
 
 class VaultsService {
+
+
+  async DeleteVault(vaultId) {
+    const res = await api.delete(`api/vaults/${vaultId}`);
+    logger.log("Deleted Vault", res.data);
+
+    const i = AppState.vaults.findIndex((vault) => vault.id == vaultId);
+    AppState.vaults.splice(i, 1);
+    AppState.activeVault = null;
+  }
+
+
+  async getKeepsForVault(vaultId) {
+    const res = await api.get(`api/vaults/${vaultId}/keeps`);
+    logger.log('Got VaultKeeps!', res.data);
+    const keeps = res.data.map((pojo) => new Keep(pojo))
+    AppState.keeps = keeps;
+  }
+
+
+  async getVaultById(vaultId) {
+    const res = await api.get(`api/vaults/${vaultId}`);
+    logger.log('Got Vault!', res.data);
+    const vault = new Vault(res.data);
+    AppState.activeVault = vault;
+  }
 
 
   async updateVault(vaultId, editData) {
