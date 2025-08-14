@@ -7,6 +7,13 @@ import { Keep } from "@/models/Keep.js";
 
 class VaultsService {
 
+  async createVault(vaultData, route) {
+    const res = await api.post("api/vaults", vaultData);
+    const vault = new Vault(res.data);
+    if (route == vault.creatorId)
+    AppState.vaults.push(vault);
+  }
+
 
   async DeleteVault(vaultId) {
     const res = await api.delete(`api/vaults/${vaultId}`);
@@ -50,12 +57,15 @@ class VaultsService {
   }
   
   
-  async getVaultsByProfileId(profileId) {
+  async getVaultsByProfileId(profileId, bool) {
     const res = await api.get(`api/profiles/${profileId}/vaults`);
     logger.log('Got Profile Vaults', res.data);
-    AppState.vaults = res.data.map((pojo) => new Vault(pojo));
+    if (!bool){
+      AppState.vaults = res.data.map((pojo) => new Vault(pojo));
+    } else {
+      AppState.userVaults = res.data.map((pojo)=> new Vault(pojo));
+    }
   }
-
 
 }
 

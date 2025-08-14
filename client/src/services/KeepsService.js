@@ -2,8 +2,16 @@ import { logger } from "@/utils/Logger.js";
 import { api } from "./AxiosService.js";
 import { AppState } from "@/AppState.js";
 import { Keep } from "@/models/Keep.js";
+import { VaultKeep } from "@/models/VaultKeep.js";
 
 class KeepsService {
+  
+  async createVaultKeep(vaultKeepData) {
+    logger.log("䷳", vaultKeepData);
+    const res = await api.post("api/vaultKeeps", vaultKeepData);
+    const vaultKeep = new VaultKeep(res.data);
+    AppState.vaultKeeps.push(vaultKeep);
+  }
   
   
   
@@ -45,11 +53,11 @@ class KeepsService {
     AppState.keeps.splice(i, 1);
   }
 
-  async createKeep(keepData) {
+  async createKeep(keepData, route) {
     logger.log("🖼️", keepData);
     const res = await api.post("api/keeps", keepData);
     const keep = new Keep(res.data);
-
+    if (route == keep.creatorId)
     AppState.keeps.push(keep);
   }
 

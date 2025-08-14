@@ -35,7 +35,7 @@ function login() {
           <ul class="dropdown-menu shadow-sm" aria-labelledby="createMenu">
             <li><a class="dropdown-item py-1 px-3 open-sans-font" role="button" data-bs-toggle="modal" data-bs-target="#createKeepModal">new keep</a></li>
             <li><hr class="dropdown-divider my-1"></li>
-            <li><a class="dropdown-item py-1 px-3 open-sans-font" role="button">new vault</a></li>
+            <li><a class="dropdown-item py-1 px-3 open-sans-font" role="button" data-bs-toggle="modal" data-bs-target="#createVaultModal">new vault</a></li>
           </ul>
         </div>
       </div>

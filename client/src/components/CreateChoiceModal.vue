@@ -46,7 +46,7 @@ function openForm(form){
     Modal.getOrCreateInstance("#createKeepModal").show();
   } else {
     Modal.getOrCreateInstance("#createChoiceModal").hide();
-    Modal.getOrCreateInstance("createVaultModal").show();
+    Modal.getOrCreateInstance("#createVaultModal").show();
   }
 }
 

@@ -4,7 +4,7 @@ import { keepsService } from '@/services/KeepsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { Modal } from 'bootstrap';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 
@@ -14,6 +14,7 @@ const route = useRoute();
 const activeVault = computed(()=> AppState.activeVault);
 const isVaultPage = computed(()=> route.name == 'Vault Details Page');
 const account = computed(()=> AppState.account);
+const userVaults = computed(()=> AppState.userVaults);
 
 function closeModal(){
   Modal.getOrCreateInstance("#keepDetailsModal").hide();
@@ -29,6 +30,22 @@ async function deleteVaultKeep(){
   catch (error){
     Pop.error(error);
     logger.log('Could not delete vaultkeep', error);
+  }
+}
+
+const vaultKeepData = ref({
+  keepId: 0,
+  vaultId: 0,
+})
+
+async function createVaultKeep(){
+  const newVaultKeepData = {keepId: activeKeep.value.id, vaultId: vaultKeepData.value.vaultId};
+  try {
+    await keepsService.createVaultKeep(newVaultKeepData);
+    Pop.success("Added the keep to your vault!");
+  }
+  catch (error){
+    Pop.error(error);
   }
 }
 
@@ -54,27 +71,20 @@ async function deleteVaultKeep(){
           <div class="d-inline-flex align-items-center justify-content-between mb-2 mt-5 mt-lg-0">
             <div class="d-flex ms-3 ms-xl-5">
               <div v-if="activeVault?.creatorId != account?.id || !isVaultPage" class="dropdown open d-flex">
-                <button
-                  class=" btn dropdown-toggle open-sans-font fw-bold"
-                  type="button"
-                  id="categoriesBtn"
-                  data-bs-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  PLANTS
-                </button>
-                <div class="dropdown-menu" aria-labelledby="triggerId">
-                  <button class="dropdown-item" href="#">Action</button>
-                  <button class="dropdown-item disabled" href="#">
-                    Disabled action
-                  </button>
-                </div>
+                <form @submit.prevent="createVaultKeep()" class="d-flex">
+                  <select v-model="vaultKeepData.vaultId" class="form-select" aria-label="vault select" required>
+                    <option disabled hidden selected value="">Your Vaults</option>
+                    <option v-for="vault in userVaults" :key="`create-vaultKeep-id-${vault.id}`" class="dropdown-item" :value="vault.id">{{ vault.name }}</option>
+                    
+                  </select>
+                  <button type="submit" v-if="!isVaultPage && account" class="ms-3 ms-xl-4 save-btn mt-1 open-sans-font">save</button>
+                </form>
               </div>
+
               <div v-else class="">
                 <h2 @click="deleteVaultKeep()" class="fs-5 remove-btn mb-0"><i class="mdi mdi-cancel"> </i> Remove</h2>
               </div>
-              <button v-if="!isVaultPage" class="ms-3 ms-xl-4 save-btn mt-1 open-sans-font">save</button>
+              
             </div>
             <RouterLink @click="closeModal()" :to="{ name: 'Profile', params: { profileId: `${activeKeep.creatorId}`} }">
               <div class="d-inline-flex align-items-center me-4">
@@ -94,6 +104,27 @@ async function deleteVaultKeep(){
 
 a {
   color: black;
+}
+
+.form-select {
+  border: none;
+  color: rgba(185, 178, 178, 0.987);
+  border-bottom: 2px solid rgba(160, 155, 155, 0.532);
+  border-radius: 0;
+  outline: none !important;
+  --bs-form-select-bg-img: none;
+  font-size: 1.3rem;
+  padding-bottom: 0;
+  letter-spacing: .15rem;
+  padding-right: 0;
+  transition: all .2s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    color: black;
+    border-bottom: 2px solid black;
+    font-weight: 500;
+  }
 }
 
   .keep-img {

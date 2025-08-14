@@ -1,6 +1,6 @@
 <script setup>
 import { AppState } from '@/AppState.js';
-import { keepsService } from '@/services/KeepsService.js';
+import { vaultsService } from '@/services/VaultsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { Modal } from 'bootstrap';
@@ -9,54 +9,53 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute();
 
-const keepData = ref({
+const vaultData = ref({
   name: '',
   img: '',
-  description: '',
-  views: 1
-})
+  isPrivate: false,
+  description: 'No description'
+});
 
-async function createKeep(){
+async function createVault(){
   try {
-    await keepsService.createKeep(keepData.value, route.params.profileId);
+    await vaultsService.createVault(vaultData.value, route.params.profileId);
     clearForm();
-    Pop.success("Keep Created!");
-    Modal.getOrCreateInstance("#createKeepModal").hide();
+    Pop.success("Vault Created!");
+    Modal.getOrCreateInstance("#createVaultModal").hide();
   }
   catch (error){
     Pop.error(error);
-    logger.error('Could not create Keep', error);
+    logger.error('Could not create Vault', error);
   }
-}
+};
 
-watch(()=> keepData.value.img, changeImg);
+watch(()=> vaultData.value.img, changeImg);
 
 
 function changeImg(){
-  AppState.imgHasChanged = keepData.value.img.includes('http');
-}
+  AppState.imgHasChanged = vaultData.value.img.includes('http');
+};
 
 
 function clearForm(){
-  keepData.value = {
+  vaultData.value = {
     name: '',
     img: '',
-    description: '',
-    views: 1
+    description: 'No description',
+    isPrivate: false,
   }
-}
-
+};
 </script>
 
 
 <template>
-  <div class="container-fluid">
-    <form @submit.prevent="createKeep()" class="row">
-      <div v-if="keepData.img" class="mb-5 col-12 col-lg-6">
+<section class="container-fluid">
+  <form @submit.prevent="createVault()" class="row">
+      <div v-if="vaultData.img" class="mb-5 col-12 col-lg-6">
         <small class="m-3">Image Preview</small>
-        <img :src="keepData.img" alt="Your Image" class="img-fluid photo-preview" />
+        <img :src="vaultData.img" alt="Your Image" class="img-fluid photo-preview" />
       </div>
-      <div @change="changeImg()" :class="keepData.img ? 'col-12 col-md-6' : 'col-12'">
+      <div @change="changeImg()" :class="vaultData.img ? 'col-12 col-md-6' : 'col-12'">
         <div class="form-floating mb-3">
           <input
             type="text"
@@ -65,7 +64,7 @@ function clearForm(){
             id="title"
             aria-describedby="helpId"
             placeholder="Title..."
-            v-model="keepData.name"
+            v-model="vaultData.name"
             minlength="1"
             maxlength="50"
             required
@@ -80,40 +79,33 @@ function clearForm(){
             id="imgUrl"
             aria-describedby="helpId"
             placeholder="Image URL..."
-            v-model="keepData.img"
+            v-model="vaultData.img"
             minlength="1"
             maxlength="500"
             required
           />
           <label for="imgUrl" class="form-label">Image URL...</label>
         </div>
-        <div class="form-floating mb-3">
-          <textarea
-            type="text"
-            class="form-control fs-5 mt-5 mb-3"
-            name="description"
-            id="description"
-            aria-describedby="helpId"
-            placeholder="Keep Description..."
-            v-model="keepData.description"
-            minlength="1"
-            maxlength="500"
-            required
-          />
-          <label for="description" class="form-label">Keep Description...</label>
+        <div class="d-block-flex text-end pb-0">
+          <small>Private Vaults can only be seen by you</small>
+          <div class="form-check justify-content-end d-flex pb-0">
+            <input class="form-check-input pb-0" type="checkbox" value="true" id="isPrivate">
+            <label class="form-check-label ms-2 pb-0" for="isPrivate">
+              Make Vault Private?
+            </label>
+          </div>
         </div>
         <div class="d-flex justify-content-end">
           <button type="submit" class="btn open-sans-font">Create</button>
         </div>
       </div>
     </form>
-  </div>
+</section>
 </template>
 
 
 <style lang="scss" scoped>
-
-.form-control {
+  .form-control {
   border: none;
   border-bottom: 2px solid lightgray;
   border-radius: 2%;
@@ -150,5 +142,4 @@ button {
   width: 80%;
   border-radius: 10px;
 }
-
 </style>
