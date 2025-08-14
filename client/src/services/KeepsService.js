@@ -15,12 +15,13 @@ class KeepsService {
   
   
   
-  async deleteVaultKeep(vaultKeepId) {
-    const res = await api.delete(`api/vaultkeeps/${vaultKeepId}`);
+  async deleteVaultKeep(keepId) {
+    const vaultKeep = AppState.keeps.find((keep)=> keep.id == keepId);
+    const res = await api.delete(`api/vaultkeeps/${vaultKeep.vaultKeepId}`);
     logger.log('Deleted VaultKeep', res.data);
-    AppState.activeKeep = null;
-    const i = AppState.keeps.findIndex((keep)=> keep.vaultKeepId == vaultKeepId);
+    const i = AppState.keeps.findIndex((keep)=> keep.id == keepId);
     AppState.keeps.splice(i, 1);
+    AppState.activeKeep = null;
   }
 
 
@@ -34,11 +35,8 @@ class KeepsService {
   async getKeepById(keepId) {
     const res = await api.get(`api/keeps/${keepId}`);
     const newKeep = new Keep(res.data);
-
+    
     AppState.activeKeep = newKeep;
-
-    const i = AppState.keeps.findIndex((keep) => keep.id == newKeep.id);
-    AppState.keeps.splice(i, 1, newKeep);
 
     return newKeep;
   }
@@ -64,7 +62,6 @@ class KeepsService {
   async getKeeps() {
     const res = await api.get("api/keeps");
     logger.log("Got Keeps!", res.data);
-
     AppState.keeps = res.data.map((pojo) => new Keep(pojo));
   }
 

@@ -91,6 +91,7 @@ async function toggleIsPrivate(){
   .vault-img {
     display: block;
     width: 100%;
+    aspect-ratio: 1/1;
     object-fit: cover;
     border-radius: 10px;
     z-index: 0;

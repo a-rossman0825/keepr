@@ -137,7 +137,7 @@ public class KeepsRepository : IRepository<Keep>
       id = @Id LIMIT 1
     ;";
     int rowsAffected = _db.Execute(sql, updateData);
-    if (rowsAffected != 1) throw new Exception(rowsAffected + " ROWS HABE BEEN UPDATED, CHECK YO CODE BRO!");
+    if (rowsAffected != 1) throw new Exception(rowsAffected + " ROWS HAVE BEEN UPDATED, CHECK YO CODE BRO!");
   }
 
   internal Keep getByIdAndIncrement(int keepId)
@@ -147,10 +147,13 @@ public class KeepsRepository : IRepository<Keep>
 
     SELECT
       keeps.*,
+      COUNT(vault_keep.id) AS kept,
       accounts.*
     FROM keeps
     JOIN accounts ON keeps.creator_id = accounts.id
+    LEFT JOIN vault_keep ON vault_keep.keep_id = keeps.id
     WHERE keeps.id = @keepId
+    GROUP BY keeps.id
     ; ";
 
     return _db.Query<Keep, Account, Keep>(sql, (keep, account) =>

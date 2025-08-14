@@ -62,3 +62,14 @@ CREATE TABLE vault_keep(
 DROP TABLE vault_keep;
 
 
+
+    SELECT
+      keeps.*,
+      COUNT(vault_keep.id) AS kept,
+      accounts.*
+    FROM keeps
+    JOIN accounts ON keeps.creator_id = accounts.id
+    LEFT JOIN vault_keep ON vault_keep.keep_id = keeps.id
+    WHERE keeps.id = 186
+    GROUP BY keeps.id
+    ;

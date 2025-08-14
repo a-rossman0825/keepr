@@ -4,7 +4,7 @@ import KeepCard from '@/components/KeepCard.vue';
 import { vaultsService } from '@/services/VaultsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
@@ -13,6 +13,11 @@ const router = useRouter();
 onMounted(()=> {
   getVaultById();
   getKeeps();
+})
+
+onUnmounted(()=> {
+  AppState.activeVault = null;
+  AppState.keeps = [];
 })
 
 const vault = computed(()=> AppState.activeVault);

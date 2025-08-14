@@ -4,7 +4,7 @@ import { keepsService } from '@/services/KeepsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { Modal } from 'bootstrap';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 
@@ -21,10 +21,11 @@ function closeModal(){
 }
 
 async function deleteVaultKeep(){
+
   const confirmed = await Pop.confirm('Delete this keep from your vault?')
   if (!confirmed) return;
   try {
-    await keepsService.deleteVaultKeep(activeKeep.value.vaultKeepId);
+    await keepsService.deleteVaultKeep(activeKeep.value.id);
     closeModal();
   }
   catch (error){
@@ -42,6 +43,8 @@ async function createVaultKeep(){
   const newVaultKeepData = {keepId: activeKeep.value.id, vaultId: vaultKeepData.value.vaultId};
   try {
     await keepsService.createVaultKeep(newVaultKeepData);
+    activeKeep.value.kept++;
+    closeModal();
     Pop.success("Added the keep to your vault!");
   }
   catch (error){
@@ -71,11 +74,10 @@ async function createVaultKeep(){
           <div class="d-inline-flex align-items-center justify-content-between mb-2 mt-5 mt-lg-0">
             <div class="d-flex ms-3 ms-xl-5">
               <div v-if="activeVault?.creatorId != account?.id || !isVaultPage" class="dropdown open d-flex">
-                <form @submit.prevent="createVaultKeep()" class="d-flex">
+                <form v-if="account" @submit.prevent="createVaultKeep()" class="d-flex">
                   <select v-model="vaultKeepData.vaultId" class="form-select" aria-label="vault select" required>
                     <option disabled hidden selected value="">Your Vaults</option>
                     <option v-for="vault in userVaults" :key="`create-vaultKeep-id-${vault.id}`" class="dropdown-item" :value="vault.id">{{ vault.name }}</option>
-                    
                   </select>
                   <button type="submit" v-if="!isVaultPage && account" class="ms-3 ms-xl-4 save-btn mt-1 open-sans-font">save</button>
                 </form>

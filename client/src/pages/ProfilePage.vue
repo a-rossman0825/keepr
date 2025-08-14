@@ -8,7 +8,7 @@ import { keepsService } from '@/services/KeepsService.js';
 import { vaultsService } from '@/services/VaultsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
-import { computed, ref, watch } from 'vue';
+import { computed, onUnmounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 
@@ -31,6 +31,12 @@ watch(() => route.params.profileId, ()=> {
   getKeepsByProfileId();
   getVaultsByProfileId();
 }, {immediate:true});
+
+onUnmounted(()=> {
+  AppState.activeProfile = null;
+  AppState.keeps = [];
+  AppState.vaults = [];
+})
 
 async function getProfileById(){
   const profileId = route.params.profileId;
@@ -106,6 +112,13 @@ async function editProfile(){
   }
 }
 
+function clearForm(){
+  editableAccountData.value = {
+    name: account.value.name,
+    coverImg: account.value.coverImg,
+    picture: account.value.picture
+  }
+}
 
 
 function logout() {
@@ -126,6 +139,7 @@ function toggleEdit(bool){
   if (nameEdit.value == true) nameEdit.value = false;
   if (pfpEdit.value == true) pfpEdit.value = false;
   if (coverImgEdit.value == true) coverImgEdit.value = false;
+  clearForm();
 }
 
 let nameEdit = ref(false);

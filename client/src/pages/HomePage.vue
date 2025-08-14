@@ -2,10 +2,9 @@
 import { AppState } from '@/AppState.js';
 import KeepCard from '@/components/KeepCard.vue';
 import { keepsService } from '@/services/KeepsService.js';
-import { vaultsService } from '@/services/VaultsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
-import { computed, onMounted, watch } from 'vue';
+import { computed, onMounted, onUnmounted } from 'vue';
 
 const keeps = computed(()=> AppState.keeps);
 
@@ -14,6 +13,10 @@ const account = computed(()=> AppState.account);
 onMounted(()=> {
   getKeeps();
 });
+
+onUnmounted(()=> {
+  AppState.keeps = [];
+})
 
 
 
