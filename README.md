@@ -100,62 +100,6 @@ Vue.js Structure:
 └── Assets (Images, styles, and static content)
 ```
 
-## 🚀 Getting Started
-
-### Prerequisites
-
-- **Node.js** (v16 or higher)
-- **.NET 9 SDK**
-- **MySQL Server**
-- **Auth0 Account** (for authentication setup)
-
-### Installation
-
-1. **Clone the repository**
-
-   ```bash
-   git clone https://github.com/a-rossman0825/keepr.git
-   cd keepr
-   ```
-
-2. **Setup Backend**
-
-   ```bash
-   cd server
-
-   # Install dependencies
-   dotnet restore
-
-   # Create database (update connection string in appsettings.json)
-   mysql -u root -p < dbSetup.sql
-
-   # Configure environment variables
-   cp appsettings.example.json appsettings.Development.json
-   # Update with your Auth0 and database credentials
-
-   # Run the server
-   dotnet run
-   ```
-
-3. **Setup Frontend**
-
-   ```bash
-   cd client
-
-   # Install dependencies
-   npm install
-
-   # Configure environment (update src/env.js with your API URL)
-
-   # Start development server
-   npm run dev
-   ```
-
-4. **Access the application**
-   - Frontend: `http://localhost:8080`
-   - Backend API: `https://localhost:7045`
-   - API Documentation: `https://localhost:7045/swagger`
-
 ## 📁 Project Structure
 
 ```
@@ -195,36 +139,10 @@ This project demonstrates proficiency in:
 - **Responsive Design**: Mobile-first, cross-device compatibility
 - **Version Control**: Git workflow and project organization
 
-## 🔄 Development Workflow
-
-```bash
-# Development commands
-npm run dev          # Start frontend development server
-dotnet run           # Start backend API server
-npm run build        # Build frontend for production
-dotnet publish       # Publish backend for deployment
-```
-
-## 🤝 Contributing
-
-This is a portfolio project, but feedback and suggestions are welcome! Please feel free to:
-
-1. Fork the repository
-2. Create a feature branch
-3. Submit a pull request
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
 ## 👨‍💻 Developer
 
-**Alex Rossman**
+**Anthony J. Rossman**
 
 - GitHub: [@a-rossman0825](https://github.com/a-rossman0825)
-- LinkedIn: [Connect with me](https://linkedin.com/in/alex-rossman)
-- Portfolio: [View my work](https://alex-rossman.dev)
+- LinkedIn: [Connect with me](https://www.linkedin.com/in/anthony-rossman-08b62b364/)
 
----
-
-_Built with ❤️ as part of the CodeWorks Full-Stack Development Program_
