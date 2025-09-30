@@ -79,7 +79,7 @@ async function toggleIsPrivate(){
 <template>
   <div v-if="vault" class="container-fluid">
     <div class="d-flex justify-content-center">  
-      <div class="row text-center justify-content-center mt-3 ">
+      <div class="row text-center justify-content-center mt-3 hero-wrapper">
         <div class="align-items-center d-flex text-center justify-content-center bg-cover" :style="`background-image: url('${ vault.img }')`">
           <div class="row text-light hero-text fraunces-font">
             <h1 class="">{{ vault.name.toUpperCase() }}</h1>
@@ -122,7 +122,8 @@ async function toggleIsPrivate(){
 .bg-cover {
   height: 200px;
   width: 600px;
-  
+  background-repeat: no-repeat;
+  background-size: cover;
   border-radius: 10px;
 
 }
@@ -133,6 +134,18 @@ async function toggleIsPrivate(){
   &:hover {
     opacity: 100%;
     cursor: pointer;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-wrapper {
+    width: 50%;
+  }
+}
+
+@media (max-width: 769px) {
+  .hero-wrapper {
+    width: 100%;
   }
 }
 

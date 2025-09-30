@@ -1,0 +1,121 @@
+.
+├── client
+│   ├── @types
+│   │   └── shims-vue.d.ts
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── jsconfig.json
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── public
+│   │   └── img
+│   │       └── cw-logo.png
+│   ├── README.md
+│   ├── src
+│   │   ├── App.vue
+│   │   ├── AppState.js
+│   │   ├── assets
+│   │   │   ├── img
+│   │   │   │   ├── cw-logo.png
+│   │   │   │   ├── keepr_logo_white_bg.png
+│   │   │   │   ├── keepr_logo.png
+│   │   │   │   ├── letter-k_10398629.png
+│   │   │   │   ├── placeholder-coverImg.png
+│   │   │   │   └── vue-logo.png
+│   │   │   └── scss
+│   │   │       ├── _main.scss
+│   │   │       ├── _variables.scss
+│   │   │       └── style.scss
+│   │   ├── components
+│   │   │   ├── CreateChoiceModal.vue
+│   │   │   ├── CreateKeepModal.vue
+│   │   │   ├── CreateModalWrapper.vue
+│   │   │   ├── CreateVaultModal.vue
+│   │   │   ├── DetailsModalWrapper.vue
+│   │   │   ├── globals
+│   │   │   │   └── Icon.vue
+│   │   │   ├── KeepCard.vue
+│   │   │   ├── KeepDetailsModal.vue
+│   │   │   ├── Login.vue
+│   │   │   ├── Navbar.vue
+│   │   │   ├── NavbarMobile.vue
+│   │   │   └── VaultCard.vue
+│   │   ├── env.js
+│   │   ├── handlers
+│   │   │   └── RoomHandler.js
+│   │   ├── main.js
+│   │   ├── models
+│   │   │   ├── Account.js
+│   │   │   ├── DbItem.js
+│   │   │   ├── Keep.js
+│   │   │   ├── Profile.js
+│   │   │   ├── Vault.js
+│   │   │   └── VaultKeep.js
+│   │   ├── pages
+│   │   │   ├── AboutPage.vue
+│   │   │   ├── AccountPage.vue
+│   │   │   ├── HomePage.vue
+│   │   │   ├── ProfilePage.vue
+│   │   │   └── VaultDetails.vue
+│   │   ├── router.js
+│   │   ├── services
+│   │   │   ├── AccountService.js
+│   │   │   ├── AuthService.js
+│   │   │   ├── AxiosService.js
+│   │   │   ├── KeepsService.js
+│   │   │   ├── SocketService.js
+│   │   │   └── VaultsService.js
+│   │   └── utils
+│   │       ├── Logger.js
+│   │       ├── Pop.js
+│   │       ├── registerGlobalComponents.js
+│   │       ├── registerGlobalSocketHandlers.js
+│   │       ├── SocketHandler.js
+│   │       └── Store.js
+│   └── vite.config.js
+├── keepr.code-workspace
+├── project-tree.txt
+└── server
+    ├── appsettings.Development.json
+    ├── appsettings.json
+    ├── Controllers
+    │   ├── AccountController.cs
+    │   ├── KeepsController.cs
+    │   ├── ProfilesController.cs
+    │   ├── ValuesController.cs
+    │   ├── VaultKeepsController.cs
+    │   └── VaultsController.cs
+    ├── dbSetup.sql
+    ├── Dockerfile
+    ├── Globals.cs
+    ├── Interfaces
+    │   ├── IRepository.cs
+    │   └── IService.cs
+    ├── keepr.csproj
+    ├── Models
+    │   ├── Account.cs
+    │   ├── DbItem.cs
+    │   ├── Keep.cs
+    │   ├── Profile.cs
+    │   ├── Vault.cs
+    │   └── VaultKeep.cs
+    ├── Program.cs
+    ├── Properties
+    │   └── launchSettings.json
+    ├── Readme.md
+    ├── Repositories
+    │   ├── AccountsRepository.cs
+    │   ├── KeepsRepository.cs
+    │   ├── VaultKeepsRepository.cs
+    │   └── VaultsRepository.cs
+    ├── Services
+    │   ├── AccountService.cs
+    │   ├── KeepsService.cs
+    │   ├── ProfilesService.cs
+    │   ├── VaultKeepsService.cs
+    │   └── VaultsService.cs
+    ├── Startup.cs
+    └── wwwroot
+        └── index.html
+
+24 directories, 95 files
