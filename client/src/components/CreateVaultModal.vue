@@ -1,7 +1,7 @@
 <script setup>
 import { AppState } from '@/AppState.js';
 import { vaultsService } from '@/services/VaultsService.js';
-import { logger } from '@/utils/Logger.js';
+// import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { Modal } from 'bootstrap';
 import { ref, watch } from 'vue';
@@ -25,7 +25,7 @@ async function createVault(){
   }
   catch (error){
     Pop.error(error);
-    logger.error('Could not create Vault', error);
+    // logger.error('Could not create Vault', error);
   }
 };
 

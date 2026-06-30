@@ -1,7 +1,7 @@
 <script setup>
 import { Keep } from '@/models/Keep.js';
 import { keepsService } from '@/services/KeepsService.js';
-import { logger } from '@/utils/Logger.js';
+// import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { Modal } from 'bootstrap';
 import { RouterLink, useRoute } from 'vue-router';
@@ -22,7 +22,7 @@ import { RouterLink, useRoute } from 'vue-router';
       }
     catch (error){
       Pop.error(error);
-      logger.log('Could not update keep view count', error);
+      // logger.log('Could not update keep view count', error);
     }
     
   }

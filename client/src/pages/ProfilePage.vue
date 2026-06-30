@@ -6,7 +6,7 @@ import { accountService } from '@/services/AccountService.js';
 import { AuthService } from '@/services/AuthService.js';
 import { keepsService } from '@/services/KeepsService.js';
 import { vaultsService } from '@/services/VaultsService.js';
-import { logger } from '@/utils/Logger.js';
+// import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { computed, onUnmounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
@@ -45,7 +45,7 @@ async function getProfileById(){
   }
   catch (error){
     Pop.error(error);
-    logger.log('Could not get profile!', error);
+    // logger.log('Could not get profile!', error);
   }
 }
 
@@ -80,7 +80,7 @@ async function getVaultsByProfileId(){
   }
   catch (error){
     Pop.error(error);
-    logger.error('Could not update profile!', error);
+    // logger.error('Could not update profile!', error);
   }
 }
 

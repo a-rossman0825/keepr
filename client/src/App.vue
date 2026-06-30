@@ -9,7 +9,7 @@ import KeepDetailsModal from './components/KeepDetailsModal.vue';
 import DetailsModalWrapper from './components/DetailsModalWrapper.vue';
 import { computed, watch } from 'vue';
 import { Pop } from './utils/Pop.js';
-import { logger } from './utils/Logger.js';
+// import { logger } from './utils/Logger.js';
 import { vaultsService } from './services/VaultsService.js';
 import { AppState } from './AppState.js';
 import CreateVaultModal from './components/CreateVaultModal.vue';
@@ -29,7 +29,7 @@ watch(()=> account.value?.id,
   }
   catch (error){
     Pop.error(error);
-    logger.error('could not get user Vaults!', error);
+    // logger.error('could not get user Vaults!', error);
   }
 }
 </script>

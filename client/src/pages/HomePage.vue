@@ -2,7 +2,7 @@
 import { AppState } from '@/AppState.js';
 import KeepCard from '@/components/KeepCard.vue';
 import { keepsService } from '@/services/KeepsService.js';
-import { logger } from '@/utils/Logger.js';
+// import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { computed, onMounted, onUnmounted } from 'vue';
 
@@ -26,7 +26,7 @@ async function getKeeps(){
   }
   catch (error){
     Pop.error(error);
-    logger.error('Could not get Keeps', error);
+  //   logger.error('Could not get Keeps', error);
   }
 }
 

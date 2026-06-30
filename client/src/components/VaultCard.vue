@@ -2,7 +2,7 @@
 import { AppState } from '@/AppState.js';
 import { Vault } from '@/models/Vault.js';
 import { vaultsService } from '@/services/VaultsService.js';
-import { logger } from '@/utils/Logger.js';
+// import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { computed, ref } from 'vue';
 
@@ -25,7 +25,7 @@ async function toggleIsPrivate(){
   }
   catch (error){
     Pop.error(error);
-    logger.error('Could not toggle isPrivate on vault!', error);
+    // logger.error('Could not toggle isPrivate on vault!', error);
     isPrivateUpdating.value = false;
   }
 }

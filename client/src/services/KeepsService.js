@@ -1,4 +1,3 @@
-import { logger } from "@/utils/Logger.js";
 import { api } from "./AxiosService.js";
 import { AppState } from "@/AppState.js";
 import { Keep } from "@/models/Keep.js";
@@ -7,7 +6,7 @@ import { VaultKeep } from "@/models/VaultKeep.js";
 class KeepsService {
   
   async createVaultKeep(vaultKeepData) {
-    logger.log("䷳", vaultKeepData);
+    // logger.log("䷳", vaultKeepData);
     const res = await api.post("api/vaultKeeps", vaultKeepData);
     const vaultKeep = new VaultKeep(res.data);
     AppState.vaultKeeps.push(vaultKeep);
@@ -17,8 +16,8 @@ class KeepsService {
   
   async deleteVaultKeep(keepId) {
     const vaultKeep = AppState.keeps.find((keep)=> keep.id == keepId);
-    const res = await api.delete(`api/vaultkeeps/${vaultKeep.vaultKeepId}`);
-    logger.log('Deleted VaultKeep', res.data);
+    await api.delete(`api/vaultkeeps/${vaultKeep.vaultKeepId}`);
+    // logger.log('Deleted VaultKeep', res.data);
     const i = AppState.keeps.findIndex((keep)=> keep.id == keepId);
     AppState.keeps.splice(i, 1);
     AppState.activeKeep = null;
@@ -27,7 +26,7 @@ class KeepsService {
 
   async updateKeep(keepId, updateData) {
     const res = await api.put(`api/keeps/${keepId}`, updateData);
-    logger.log("updated Keep", res.data);
+    // logger.log("updated Keep", res.data);
 
     AppState.activeKeep = new Keep(res.data);
   }
@@ -42,17 +41,17 @@ class KeepsService {
   }
 
   async deleteKeep(keepId) {
-    const res = await api.delete(`api/keeps/${keepId}`);
-    logger.log("Deleted keep", res.data);
+    await api.delete(`api/keeps/${keepId}`);
+    // logger.log("Deleted keep", res.data);
 
     const i = AppState.keeps.findIndex((keep) => keep.id == keepId);
-    logger.log("got index of keep", i);
+    // logger.log("got index of keep", i);
 
     AppState.keeps.splice(i, 1);
   }
 
   async createKeep(keepData, route) {
-    logger.log("🖼️", keepData);
+    // logger.log("🖼️", keepData);
     const res = await api.post("api/keeps", keepData);
     const keep = new Keep(res.data);
     if (route == keep.creatorId)
@@ -61,13 +60,13 @@ class KeepsService {
 
   async getKeeps() {
     const res = await api.get("api/keeps");
-    logger.log("Got Keeps!", res.data);
+    // logger.log("Got Keeps!", res.data);
     AppState.keeps = res.data.map((pojo) => new Keep(pojo));
   }
 
     async getKeepsByProfileId(profileId) {
       const res = await api.get(`api/profiles/${profileId}/keeps`);
-      logger.log('Got Users Keeps', res.data);
+      // logger.log('Got Users Keeps', res.data);
       AppState.keeps = res.data.map((pojo) => new Keep(pojo));
   
     }

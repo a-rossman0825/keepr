@@ -2,7 +2,7 @@
 import { AppState } from '@/AppState.js';
 import KeepCard from '@/components/KeepCard.vue';
 import { vaultsService } from '@/services/VaultsService.js';
-import { logger } from '@/utils/Logger.js';
+// import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -39,7 +39,7 @@ async function getKeeps(){
     await vaultsService.getKeepsForVault(route.params.vaultId);
   } catch (error){
     Pop.error(error);
-    logger.error('could not get vaultKeeps!', error);
+    // logger.error('could not get vaultKeeps!', error);
   }
 }
 
@@ -52,7 +52,7 @@ async function deleteVault(){
   }
   catch (error){
     Pop.error(error);
-    logger.error('Could not delete vault');
+    // logger.error('Could not delete vault');
   }
 }
 
@@ -68,7 +68,7 @@ async function toggleIsPrivate(){
   }
   catch (error){
     Pop.error(error);
-    logger.error('Could not toggle isPrivate on vault!', error);
+    // logger.error('Could not toggle isPrivate on vault!', error);
     isPrivateUpdating.value = false;
   }
 }

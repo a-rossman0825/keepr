@@ -1,3 +1,8 @@
+
+
+using System.Net;
+using System.Security.Claims;
+
 namespace keepr.Controllers;
 
 [Authorize]
@@ -20,6 +25,7 @@ public class AccountController : ControllerBase
     try
     {
       Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      userInfo.Id = ResolveUserId(userInfo.Id);
       return Ok(_accountService.GetOrCreateAccount(userInfo));
     }
     catch (Exception e)
@@ -34,6 +40,7 @@ public class AccountController : ControllerBase
     try
     {
       Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      userInfo.Id = ResolveUserId(userInfo.Id);
       List<Vault> vaults = _accountService.GetMyVaults(userInfo.Id);
       return Ok(vaults);
     }
@@ -49,6 +56,7 @@ public class AccountController : ControllerBase
     try
     {
       Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      userInfo.Id = ResolveUserId(userInfo.Id);
       Account updatedAccount = _accountService.Edit(editData, userInfo.Id);
       return Ok(updatedAccount);
     }
@@ -56,5 +64,19 @@ public class AccountController : ControllerBase
     {
       return BadRequest(exception.Message);
     }
+  }
+
+  private string ResolveUserId(string currentId)
+  {
+    if (!string.IsNullOrWhiteSpace(currentId)) return currentId;
+
+    string resolvedId = HttpContext.User.FindFirst("sub")?.Value
+      ?? HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value
+      ?? HttpContext.User.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value;
+
+    if (!string.IsNullOrWhiteSpace(resolvedId)) return resolvedId;
+
+    string claimTypes = string.Join(", ", HttpContext.User.Claims.Select(c => c.Type).Distinct());
+    throw new Exception($"Unable to resolve authenticated user id. Claims found: {claimTypes}");
   }
 }

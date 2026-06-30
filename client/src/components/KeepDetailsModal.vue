@@ -1,10 +1,10 @@
 <script setup>
 import { AppState } from '@/AppState.js';
 import { keepsService } from '@/services/KeepsService.js';
-import { logger } from '@/utils/Logger.js';
+// import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { Modal } from 'bootstrap';
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 
@@ -30,7 +30,7 @@ async function deleteVaultKeep(){
   }
   catch (error){
     Pop.error(error);
-    logger.log('Could not delete vaultkeep', error);
+    // logger.log('Could not delete vaultkeep', error);
   }
 }
 
