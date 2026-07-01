@@ -1,41 +1,25 @@
-# Use an official Node.js runtime as the base image for the client build
-FROM --platform=linux/amd64 node:22-slim AS client-builder
+# Build
 
-# Set the working directory in the client builder container
-WORKDIR /app/client
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 
-# Copy the client-side package.json and package-lock.json to the client builder container
-COPY client/package*.json ./
+WORKDIR /app
 
-# Install client application dependencies
-RUN npm install
+COPY *.csproj .
 
-# Copy the client application source code to the client builder container
-COPY client ./
-
-# Build the client-side code
-RUN npm run build
-
-# Manually specify an amd64 arch build environment for the dotnet restore to complete
-FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine-amd64 AS build-env
-
-WORKDIR /app/server
-
-# Copy everything
-COPY server/*.csproj ./
-
-# Restore as distinct layers
 RUN dotnet restore
 
-COPY server ./
-COPY --from=client-builder /app/client/dist /app/server/wwwroot
+COPY . .
 
-# Build and publish a release
-RUN dotnet publish -c Release -o out
-# If build fails here, check your /server folder for a *.sln file and delete it
+RUN dotnet publish -c Release -o /app/publish
 
-# Start runtime image
+# Runtime
+
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
+
 WORKDIR /app
-COPY --from=build-env /app/server/out .
-ENTRYPOINT ["dotnet", "keepr.dll"]
+
+COPY --from=build /app/publish .
+
+EXPOSE 7045
+
+ENTRYPOINT [ "dotnet", "keepr.dll" ]

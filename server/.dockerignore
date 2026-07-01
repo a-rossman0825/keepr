@@ -1,0 +1,13 @@
+
+
+# local specific directories/files
+/obj/
+/bin/
+
+.git
+.gitignore
+
+.vscode
+
+# environment values
+appsettings.Development.json

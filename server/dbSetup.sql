@@ -5,49 +5,34 @@ CREATE TABLE IF NOT EXISTS accounts(
   name VARCHAR(255) COMMENT 'User Name',
   email VARCHAR(255) UNIQUE COMMENT 'User Email',
   picture VARCHAR(255) COMMENT 'User Picture',
-  cover_img VARCHAR(1000) COMMENT 'User Cover Image'
+  cover_img VARCHAR(512) DEFAULT 'https://images.unsplash.com/photo-1699462515761-90db271d77c8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGRlZmF1bHQlMjBjb3ZlciUyMGltZ3xlbnwwfDB8MHx8fDA%3D' COMMENT 'User Cover Image'
 ) default charset utf8mb4 COMMENT '';
 
-ALTER TABLE accounts
-ADD COLUMN cover_img VARCHAR(1000) DEFAULT 'https://images.unsplash.com/photo-1699462515761-90db271d77c8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGRlZmF1bHQlMjBjb3ZlciUyMGltZ3xlbnwwfDB8MHx8fDA%3D' COMMENT  'User Cover Image'
-
-CREATE TABLE keeps(
+CREATE TABLE IF NOT EXISTS keeps(
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   name VARCHAR(255) NOT NULL,
   description VARCHAR(1000) NOT NULL,
-  img VARCHAR(1000) NOT NULL,
+  img VARCHAR(512) NOT NULL,
   views INT UNSIGNED NOT NULL DEFAULT 0,
   creator_id VARCHAR(255) NOT NULL,
   FOREIGN KEY (creator_id) REFERENCES accounts (id) ON DELETE CASCADE
 );
 
-ALTER TABLE keeps
-ADD COLUMN kept INT NOT NULL DEFAULT 0;
-
-ALTER TABLE keeps
-DROP COLUMN kept;
-
-CREATE TABLE vaults(
+CREATE TABLE IF NOT EXISTS vaults(
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   name VARCHAR(255) NOT NULL,
   description VARCHAR(1000) NOT NULL,
-  img VARCHAR(1000) NOT NULL DEFAULT 'https://images.unsplash.com/photo-1699462515761-90db271d77c8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGRlZmF1bHQlMjBjb3ZlciUyMGltZ3xlbnwwfDB8MHx8fDA%3D',
-  is_private BOOLEAN DEFAULT TRUE NOT NULL,
+  img VARCHAR(512) NOT NULL DEFAULT 'https://images.unsplash.com/photo-1699462515761-90db271d77c8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGRlZmF1bHQlMjBjb3ZlciUyMGltZ3xlbnwwfDB8MHx8fDA%3D',
+  is_private BOOLEAN DEFAULT FALSE NOT NULL,
   creator_id VARCHAR(255) NOT NULL,
   FOREIGN KEY (creator_id) REFERENCES accounts (id) ON DELETE CASCADE
 );
 
-ALTER TABLE vaults
-DROP COLUMN is_private
-
-ALTER TABLE vaults
-ADD COLUMN is_private BOOLEAN DEFAULT FALSE NOT NULL;
-
-CREATE TABLE vault_keep(
+CREATE TABLE IF NOT EXISTS vault_keep(
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -58,18 +43,3 @@ CREATE TABLE vault_keep(
   FOREIGN KEY (vault_id) REFERENCES vaults (id) ON DELETE CASCADE,
   FOREIGN KEY (creator_id) REFERENCES accounts (id) ON DELETE CASCADE
 );
-
-DROP TABLE vault_keep;
-
-
-
-    SELECT
-      keeps.*,
-      COUNT(vault_keep.id) AS kept,
-      accounts.*
-    FROM keeps
-    JOIN accounts ON keeps.creator_id = accounts.id
-    LEFT JOIN vault_keep ON vault_keep.keep_id = keeps.id
-    WHERE keeps.id = 186
-    GROUP BY keeps.id
-    ;
