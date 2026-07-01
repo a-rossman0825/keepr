@@ -4,6 +4,7 @@ services:
   api:
     depends_on:
       - mysql
+
     build:
       context: ./server
   
@@ -11,6 +12,7 @@ services:
       - "7045:8080"
 
     environment:
+      ASPNETCORE_ENVIRONMENT: Development
       CONNECTION_STRING: ${CONNECTION_STRING}
       AUTH_DOMAIN: ${AUTH_DOMAIN}
       AUTH_AUDIENCE: ${AUTH_AUDIENCE}
@@ -27,6 +29,20 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
       - ./server/dbSetup.sql:/docker-entrypoint-initdb.d/dbSetup.sql
+
+  vite:
+    depends_on:
+      - api
+
+    build: 
+      context: ./client
+    
+    ports:
+      - "5173:5173"
+    
+    volumes:
+      - ./client:/app
+      - /app/node_modules
 
 
 
